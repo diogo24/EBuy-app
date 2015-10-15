@@ -168,10 +168,11 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\EBuy\AuctionsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\PartialViewController.cs" />
-    <Compile Include="Controllers\TestLayoutController.cs" />
+    <Compile Include="Controllers\Learning\PartialViewController.cs" />
+    <Compile Include="Controllers\Learning\TestLayoutController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -241,6 +242,7 @@
     <Content Include="Views\Shared\_TestLayout.cshtml" />
     <Content Include="Views\PartialView\Index.cshtml" />
     <Content Include="Views\PartialView\PartialView.cshtml" />
+    <Content Include="Views\Auctions\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -252,6 +254,12 @@
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EBuy.Api\EBuy.Api.csproj">
+      <Project>{695b8e8f-9931-4dde-89c2-f7a21b75db9c}</Project>
+      <Name>EBuy.Api</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
