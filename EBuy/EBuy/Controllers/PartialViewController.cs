@@ -13,8 +13,15 @@ namespace EBuy.Controllers
         public ActionResult Index()
         {
             var partialViewVmList = GetPartialViewVMList();
-
             return View(partialViewVmList);
+        }
+
+        // GET: PartialView using ViewData.Model property
+        public ActionResult IndexViewDataModel()
+        {
+            var partialViewVmList = GetPartialViewVMList();
+            ViewData.Model        = partialViewVmList;
+            return View("Index");
         }
 
         #region Private Members 
