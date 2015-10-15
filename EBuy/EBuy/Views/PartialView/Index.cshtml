@@ -1,0 +1,17 @@
+﻿@using EBuy.Models
+@model IEnumerable<PartialViewVM>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Partial View</h2>
+
+<h4>List of Partial Views</h4>
+
+@foreach (var pv in Model)
+{
+    @Html.Partial("PartialView", pv)
+}
+
+
