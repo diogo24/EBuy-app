@@ -12,6 +12,12 @@ namespace EBuy.Model
     {
         public DataTable GetCumasFileData()
         {
+            // http://www.connectionstrings.com/dbf-foxpro/
+            // http://stackoverflow.com/questions/22361457/c-sharp-read-from-dbf-files-into-a-datatable
+            // http://www.codeproject.com/Articles/24247/Load-a-DBF-into-a-DataTable
+            // https://msdn.microsoft.com/en-us/library/system.data.oledb.oledbconnection(v=vs.110).aspx
+            // http://stackoverflow.com/questions/11356878/get-data-in-a-dbf-file-using-c-sharp
+
             DataTable resultData = new DataTable();
 
             using (OleDbConnection connectionHandler = new OleDbConnection(
