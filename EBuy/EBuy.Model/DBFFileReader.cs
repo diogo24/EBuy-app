@@ -21,7 +21,7 @@ namespace EBuy.Model
             DataTable resultData = new DataTable();
 
             using (OleDbConnection connectionHandler = new OleDbConnection(
-            @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\diogo.marques\Documents\GitHubVisualStudio\EBuy\EBuy\EBuy.Model\Files\;Extended Properties=dBASE IV"))
+            @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\diogo.marques\Downloads\Newest version\Newest version\Newest version\SALONMAN CURRENT\;Extended Properties=dBASE IV"))
             {
                 // Open the connection, and if open successfully, you can try to query it
                 connectionHandler.Open();
@@ -34,6 +34,12 @@ namespace EBuy.Model
                     OleDbDataAdapter DA  = new OleDbDataAdapter(MyQuery);
 
                     DA.Fill(resultData);
+
+                    var databaseName  = connectionHandler.Database;
+                    var serverVersion = connectionHandler.ServerVersion;
+                    var site          = connectionHandler.Site;
+                    var schema        = connectionHandler.GetSchema();
+                    var container     = connectionHandler.Container;
 
                     connectionHandler.Close();
                 }
