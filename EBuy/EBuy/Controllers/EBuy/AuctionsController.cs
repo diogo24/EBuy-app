@@ -1,15 +1,26 @@
-﻿using EBuy.Api;
+﻿using EBuy.Model.Models;
+using EBuy.Api.Models;
+using EBuy.Api.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using EBuy.Api;
 
 namespace EBuy.Controllers.EBuy
 {
     public class AuctionsController : Controller
     {
+        private AuctionApi _auctionApi;
+
+        public AuctionsController(AuctionApi auctionApi)
+        {
+            auctionApi.ThrowIfNull("auctionApi");
+            _auctionApi = auctionApi;
+        }
+
         // GET: Auctions
         public ActionResult Index()
         {
@@ -43,18 +54,23 @@ namespace EBuy.Controllers.EBuy
 
         // POST: Auctions/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(AuctionEditVM auction)
         {
-            try
+            // start time after end time
+            if(auction.StartTime > auction.EndTime)
             {
-                // TODO: Add insert logic here
+                ModelState.AddModelError(
+                "EndTime",
+                "Should be after start time"
+                );
+            }
 
-                return RedirectToAction("Index");
+            if(ModelState.IsValid) { 
+            // Create Auction in database
+                auction = _auctionApi.SaveAuction(auction);
             }
-            catch
-            {
-                return View();
-            }
+
+            return View(auction);
         }
 
         // GET: Auctions/Edit/5

@@ -29,5 +29,7 @@ namespace EBuy.Models
         {
             return new ApplicationDbContext();
         }
+
+        //public System.Data.Entity.DbSet<EBuy.Model.Models.Auction> Auctions { get; set; }
     }
 }
