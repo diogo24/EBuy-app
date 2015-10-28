@@ -61,18 +61,68 @@
     </dl>
 </div>
 
-<button onclick="showAuction(10)">Show Partial Details</button>
+<button id="showAuction">Show Partial Details</button>
+<button id="updateAuctionInfo">Show JSON Details</button>
 
-<div id="partial-details">
+<div class="row"></div>
 
+<div id="partial-details" class="col-md-6">
+
+</div>
+
+<div id="json-details" class="col-md-6">
+    <div class="form-group">
+        <label class="control-label col-md-3" for="Title">Title</label>
+        <div class="col-md-9">
+            <div id="Title" style="padding-top: 7px;"></div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-3" for="Description">Description</label>
+        <div class="col-md-9">
+            <div id="Description" style="padding-top: 7px;"></div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-3" for="CurrentPrice">CurrentPrice</label>
+        <div class="col-md-9">
+            <div id="CurrentPrice" style="padding-top: 7px;"></div>
+        </div>
+    </div>
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
 
-<script type="text/javascript">
-    function showAuction(auctionId) {
-        $('#partial-details').load('@Url.Action("PartialDetails", "Auctions")/' + auctionId);
-    }
-</script>
+@section Scripts {
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $("#showAuction").click(
+                    function () { showAuction(10); }
+                );
+
+            $("#updateAuctionInfo").click(
+                        function () { updateAuctionInfo(10); }
+                    );
+        });
+
+
+
+        function showAuction(auctionId) {
+            $('#partial-details').load('@Url.Action("PartialDetails", "Auctions")/' + auctionId);
+        }
+
+        function updateAuctionInfo(auctionId) {
+            $.ajax({
+                url: '@Url.Action("JSONDetails", "Auctions")/' + auctionId,
+                success: function (result) {
+                    $('#Title').text(result.Title);
+                    $('#Description').text(result.Description);
+                    $('#CurrentPrice').html(result.CurrentPrice);
+                }
+            });
+        }
+    </script>
+}
