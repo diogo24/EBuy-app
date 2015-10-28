@@ -11,6 +11,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EBuy.Api", "EBuy.Api\EBuy.A
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EBuy.Model", "EBuy.Model\EBuy.Model.csproj", "{80C7FCB8-9E6C-4EEB-B3A2-86579FF7D960}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ASPNET MVC INFO", "ASPNET MVC INFO", "{838D6EF6-B318-4CD6-85BE-89FC4B38211A}"
+	ProjectSection(SolutionItems) = preProject
+		ASPNET MVC INFO\Web application logical architecture ASPNET MVC.odt = ASPNET MVC INFO\Web application logical architecture ASPNET MVC.odt
+		ASPNET MVC INFO\Web application logical architecture AspNet MVC.png = ASPNET MVC INFO\Web application logical architecture AspNet MVC.png
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
