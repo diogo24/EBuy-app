@@ -15,6 +15,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ASPNET MVC INFO", "ASPNET M
 	ProjectSection(SolutionItems) = preProject
 		ASPNET MVC INFO\Web application logical architecture ASPNET MVC.odt = ASPNET MVC INFO\Web application logical architecture ASPNET MVC.odt
 		ASPNET MVC INFO\Web application logical architecture AspNet MVC.png = ASPNET MVC INFO\Web application logical architecture AspNet MVC.png
+		ASPNET MVC INFO\Web application physical design.png = ASPNET MVC INFO\Web application physical design.png
 	EndProjectSection
 EndProject
 Global
