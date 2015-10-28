@@ -60,7 +60,19 @@
 
     </dl>
 </div>
+
+<button onclick="showAuction(10)">Show Partial Details</button>
+
+<div id="partial-details">
+
+</div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
+
+<script type="text/javascript">
+    function showAuction(auctionId) {
+        $('#partial-details').load('@Url.Action("PartialDetails", "Auctions")/' + auctionId);
+    }
+</script>

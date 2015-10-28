@@ -46,6 +46,24 @@ namespace EBuy.Controllers.EBuy
             return View(auction);
         }
 
+        public ActionResult PartialDetails(long id)
+        {
+            CultureInfo usCulture = new CultureInfo("en-US");
+
+            var auction = new Auction
+            {
+                Id           = id,
+                Title        = "Partial",
+                Description  = "PArtial brand new version 2.0 Widget!",
+                StartPrice   = 1.00m,
+                CurrentPrice = 13.40m,
+                StartTime    = DateTime.Parse("6-15-2012 12:34 PM", usCulture.DateTimeFormat),
+                EndTime      = DateTime.Parse("6-23-2012 12:34 PM", usCulture.DateTimeFormat),
+            };
+
+            return PartialView("Details", auction);
+        }
+
         // GET: Auctions/Create
         public ActionResult Create()
         {
