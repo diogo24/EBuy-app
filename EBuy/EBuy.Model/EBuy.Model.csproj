@@ -54,14 +54,11 @@
     <Compile Include="Models\Auction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <Content Include="Files\Cumas.html" />
-    <Content Include="Files\Cumas.txt" />
+    <Folder Include="Files\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="Files\Cumas.dbf" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
