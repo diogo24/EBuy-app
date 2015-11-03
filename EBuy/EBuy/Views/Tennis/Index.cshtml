@@ -66,7 +66,7 @@
             //canvasContext.fillStyle = 'blue';
             //canvasContext.fillRect(ballX, 150, 10, 10);
             //colorRect(ballX, 150, 10, 10, 'blue');
-            colorCircle(ballX, 150, ballRadius, 0, Math.PI * 2, true, 'blue');
+            colorCircle(ballX, 150, ballRadius, 'blue');
 
             // left paddel
             //canvasContext.fillStyle = 'white';
@@ -79,10 +79,10 @@
             canvasContext.fillRect(leftX, topX, width, heigth);
         }
 
-        function colorCircle(leftX, topX, radius, startAngle, endAngle, anticlockwise, color) {
+        function colorCircle(leftX, topX, radius, color) {
             canvasContext.fillStyle = color;
             canvasContext.beginPath();
-            canvasContext.arc(leftX, topX, radius, startAngle, endAngle, anticlockwise);
+            canvasContext.arc(leftX, topX, radius, 0, Math.PI * 2, true);
             canvasContext.fill();
         }
 
