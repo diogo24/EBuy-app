@@ -1,0 +1,90 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutGameDev.cshtml";
+}
+
+<canvas id="tennis-canvas" width="800" height="600"></canvas>
+
+
+@section Scripts {
+    <script type="text/javascript">
+        var tennisCanvas;
+        var canvasContext;
+        // canvas dimensions
+        var canvasWidth  = 800;
+        var canvasHeigth = 600;
+        // move shape
+        var ballRadius = 10;
+        var ballX      = 50;
+        var ballSpeedX = 5;
+
+
+        $(function () {
+            tennisCanvas = $("#tennis-canvas");
+            canvasContext = tennisCanvas[0].getContext('2d');
+            
+            canvasWidth  = tennisCanvas.width();
+            canvasHeigth = tennisCanvas.height();
+            
+            // draw multiple time: simulate movement
+            var framesPerSecond = 60;
+            setInterval(callCanvasFunctions, 1000 / framesPerSecond);
+        });
+
+        function callCanvasFunctions() {
+            moveInCanvas();
+            drawInCanvas();
+        }
+
+        function moveInCanvas() {
+            // movement
+            ballX += ballSpeedX;
+            if ((ballX + ballRadius) > canvasWidth || ballX < 0) {
+                ballSpeedX = -ballSpeedX;
+            }
+        }
+
+        function drawInCanvas() {
+            // background rectagle
+            //canvasContext.fillStyle = 'black';
+            //canvasContext.fillRect(0, 0, canvasWidth, canvasHeigth);
+            colorRect(0, 0, canvasWidth, canvasHeigth, 'black');
+
+            //// rectangle
+            //canvasContext.fillStyle = 'red';
+            //canvasContext.fillRect(100, 200, 50, 25);
+
+            //// centered box
+            //canvasContext.fillStyle = 'white';
+            //canvasContext.fillRect(400 - (40 / 2), 300 - (40 / 2), 40, 40);
+
+            //// draw order matters: draw latter overlap previous shapes
+            //canvasContext.fillStyle = 'green';
+            //canvasContext.fillRect(400, 300, 40, 40);
+
+            //// movement
+            //ballX += 10;
+            //canvasContext.fillStyle = 'blue';
+            //canvasContext.fillRect(ballX, 150, 10, 10);
+            //colorRect(ballX, 150, 10, 10, 'blue');
+            colorCircle(ballX, 150, ballRadius, 0, Math.PI * 2, true, 'blue');
+
+            // left paddel
+            //canvasContext.fillStyle = 'white';
+            //canvasContext.fillRect(0, 210, 10, 100);
+            colorRect(0, 210, 10, 100, 'white');
+        }
+
+        function colorRect(leftX, topX, width, heigth, color) {
+            canvasContext.fillStyle = color;
+            canvasContext.fillRect(leftX, topX, width, heigth);
+        }
+
+        function colorCircle(leftX, topX, radius, startAngle, endAngle, anticlockwise, color) {
+            canvasContext.fillStyle = color;
+            canvasContext.beginPath();
+            canvasContext.arc(leftX, topX, radius, startAngle, endAngle, anticlockwise);
+            canvasContext.fill();
+        }
+
+    </script>
+}
