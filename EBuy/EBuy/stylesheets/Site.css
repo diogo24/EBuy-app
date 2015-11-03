@@ -1,0 +1,6 @@
+/* System.ArgumentException: Illegal characters in path.
+   at System.IO.Path.CheckInvalidPathChars(String path, Boolean checkAdditional)
+   at System.IO.Path.Combine(String path1, String path2)
+   at Mindscape.VisualSass.Integration.CustomTool.ExternalCommandBase.Execute(String customToolFolder)
+   at Mindscape.VisualSass.Integration.Compilation.CompassCompiler.CompileCore(String text, String sourceFilePath, String rootPath, IEnumerable`1 additionalPaths, ICompilationSettings settings, ICompilerContext context, CompilationResult result)
+   at Mindscape.VisualSass.Integration.Compilation.CompilerWithMinification.Compile(String text, String sourceFilePath, String rootPath, IEnumerable`1 additionalPaths, ICompilationSettings settings, ICompilerContext context, CompilationResult result) */
