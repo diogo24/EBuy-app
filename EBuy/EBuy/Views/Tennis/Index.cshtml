@@ -16,7 +16,12 @@
         var ballRadius = 10;
         var ballX      = 50;
         var ballSpeedX = 5;
+        var ballY = 50;
+        var ballSpeedY = 4;
 
+        // paddles
+        var paddle1Y = 250;
+        const PADDLE_HEIGHT = 100;
 
         $(function () {
             tennisCanvas = $("#tennis-canvas");
@@ -28,7 +33,24 @@
             // draw multiple time: simulate movement
             var framesPerSecond = 60;
             setInterval(callCanvasFunctions, 1000 / framesPerSecond);
+
+            // add mouse events
+            tennisCanvas.mousemove(function (evt) {
+                var mousePos = calculateMousePos(evt);
+                paddle1Y = mousePos.y - (PADDLE_HEIGHT / 2);
+            });
         });
+
+        function calculateMousePos(evt) {
+            var rect = tennisCanvas[0].getBoundingClientRect();
+            var root = document.documentElement;
+            var mouseX = evt.clientX - rect.left - root.scrollLeft;
+            var mouseY = evt.clientY - rect.top - root.scrollTop;
+            return {
+                x: mouseX,
+                y: mouseY
+            };
+        }
 
         function callCanvasFunctions() {
             moveInCanvas();
@@ -40,6 +62,11 @@
             ballX += ballSpeedX;
             if ((ballX + ballRadius) > canvasWidth || ballX < 0) {
                 ballSpeedX = -ballSpeedX;
+            }
+
+            ballY += ballSpeedY;
+            if ((ballY + ballRadius) > canvasHeigth || ballY < 0) {
+                ballSpeedY = -ballSpeedY;
             }
         }
 
@@ -66,12 +93,12 @@
             //canvasContext.fillStyle = 'blue';
             //canvasContext.fillRect(ballX, 150, 10, 10);
             //colorRect(ballX, 150, 10, 10, 'blue');
-            colorCircle(ballX, 150, ballRadius, 'blue');
+            colorCircle(ballX, ballY, ballRadius, 'blue');
 
             // left paddel
             //canvasContext.fillStyle = 'white';
             //canvasContext.fillRect(0, 210, 10, 100);
-            colorRect(0, 210, 10, 100, 'white');
+            colorRect(0, paddle1Y, 10, 100, 'white');
         }
 
         function colorRect(leftX, topX, width, heigth, color) {
