@@ -181,6 +181,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\EBuy\AuctionsController.cs" />
+    <Compile Include="Controllers\GameDev\ArkanoidController.cs" />
     <Compile Include="Controllers\GameDev\GameDevController.cs" />
     <Compile Include="Controllers\GameDev\TennisController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -405,6 +406,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Tennis\Index.cshtml" />
     <Content Include="Views\Shared\_LayoutGameDev.cshtml" />
+    <Content Include="Views\Arkanoid\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

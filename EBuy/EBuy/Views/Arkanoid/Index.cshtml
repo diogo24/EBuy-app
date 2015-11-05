@@ -1,0 +1,91 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutGameDev.cshtml";
+}
+
+<canvas id="arkanoid-canvas" width="800" height="600"></canvas>
+
+@section Scripts {
+    <script type="text/javascript">
+        var arkanoidCanvas;
+        var canvasContext;
+
+        // canvas dimensions
+        var canvasWidth  = 800;
+        var canvasHeigth = 600;
+
+        // paddle
+        const PADDLE_THICKNESS = 10;
+        const PADDLE_LENGTH = 100;
+
+        // ball
+        var ballRadius = 10;
+        var ballX      = 50;
+        var ballY      = 50;
+        var ballSpeedX = 5;
+        var ballSpeedY = 5;
+
+        $(function () {
+            arkanoidCanvas = $("#arkanoid-canvas");
+            canvasContext  = arkanoidCanvas[0].getContext('2d');
+
+            canvasWidth  = arkanoidCanvas.width();
+            canvasHeigth = arkanoidCanvas.height();
+
+            // draw multiple time: simulate movement
+            var framesPerSecond = 60;
+            setInterval(callCanvasFunctions, 1000 / framesPerSecond);
+
+        });
+
+        function callCanvasFunctions() {
+            moveInCanvas();
+            drawInCanvas();
+        }
+
+        function moveInCanvas() {
+            ballX += ballSpeedX;
+            ballY += ballSpeedY;
+
+            if (ballX < 0) {
+                ballSpeedX *= -1;
+            }
+
+            if ((ballX + ballRadius) > canvasWidth) {
+                ballSpeedX *= -1;
+            }
+
+            if (ballY < 0) {
+                ballSpeedY *= -1;
+            }
+
+            if ((ballY + ballRadius) > canvasHeigth) {
+                ballSpeedY *= -1;
+            }
+        }
+
+        function drawInCanvas() {
+            // background rectagle
+            colorRect(0, 0, canvasWidth, canvasHeigth, 'black');
+
+            // paddel
+            colorRect((canvasWidth / 2) - (PADDLE_LENGTH / 2), canvasHeigth - PADDLE_THICKNESS, 100, PADDLE_LENGTH, 'white');
+
+            // ball
+            colorCircle(ballX, ballY, ballRadius, 'blue');
+        }
+
+        // shapes helper functions
+        function colorRect(leftX, topX, width, heigth, color) {
+            canvasContext.fillStyle = color;
+            canvasContext.fillRect(leftX, topX, width, heigth);
+        }
+
+        function colorCircle(leftX, topX, radius, color) {
+            canvasContext.fillStyle = color;
+            canvasContext.beginPath();
+            canvasContext.arc(leftX, topX, radius, 0, Math.PI * 2, true);
+            canvasContext.fill();
+        }
+
+    </script>
+}
