@@ -14,15 +14,18 @@
         var canvasHeigth = 600;
 
         // paddle
+        var paddle1X = 350;
         const PADDLE_THICKNESS = 10;
-        const PADDLE_LENGTH = 100;
+        const PADDLE_DISTANCE_FROM_EDGE = 60;
+        const PADDLE_WIDTH = 100;
 
         // ball
         var ballRadius = 10;
-        var ballX      = 50;
-        var ballY      = 50;
+        var ballX      = canvasWidth / 2;
+        var ballY      = canvasHeigth / 2;
         var ballSpeedX = 5;
         var ballSpeedY = 5;
+        var ballSpeedPct = 0.35;
 
         $(function () {
             arkanoidCanvas = $("#arkanoid-canvas");
@@ -35,31 +38,76 @@
             var framesPerSecond = 60;
             setInterval(callCanvasFunctions, 1000 / framesPerSecond);
 
+            // add mouse events
+            arkanoidCanvas.mousemove(function (evt) {
+                var mousePos = calculateMousePos(evt);
+                paddle1X = mousePos.x - (PADDLE_WIDTH / 2);
+            });
+
         });
+
+        function calculateMousePos(evt) {
+            var rect = arkanoidCanvas[0].getBoundingClientRect();
+            var root = document.documentElement;
+            var mouseX = evt.clientX - rect.left - root.scrollLeft;
+            var mouseY = evt.clientY - rect.top - root.scrollTop;
+            return {
+                x: mouseX,
+                y: mouseY
+            };
+        }
 
         function callCanvasFunctions() {
             moveInCanvas();
             drawInCanvas();
         }
 
+        function ballReset() {
+            //ballSpeedX = -ballSpeedX;
+            //ballSpeedY = -ballSpeedY;
+
+            ballX = canvasWidth / 2;
+            ballY = canvasHeigth / 2;
+        }
+
         function moveInCanvas() {
+            // ball
             ballX += ballSpeedX;
             ballY += ballSpeedY;
 
-            if (ballX < 0) {
+            if (ballX < 0) { // left
                 ballSpeedX *= -1;
             }
 
-            if ((ballX + ballRadius) > canvasWidth) {
+            if (ballX > canvasWidth) { // right
                 ballSpeedX *= -1;
             }
 
-            if (ballY < 0) {
+            if (ballY < 0) { // top
                 ballSpeedY *= -1;
             }
 
-            if ((ballY + ballRadius) > canvasHeigth) {
+            if (ballY > canvasHeigth) { // bottom
+                ballReset();
+                //ballSpeedY *= -1;
+            }
+
+            // paddle
+            var paddleTopEdgeY    = canvasHeigth - PADDLE_DISTANCE_FROM_EDGE;
+            var paddleBottomEdgeY = paddleTopEdgeY + PADDLE_THICKNESS;
+            var paddleLeftEdgeX   = paddle1X;
+            var paddleRightEdgeX  = paddleLeftEdgeX + PADDLE_WIDTH;
+
+            if(ballY > paddleTopEdgeY && // below the top of the paddle
+                ballY < paddleBottomEdgeY && // above bottom of paddle
+                ballX > paddleLeftEdgeX &&  // right of left side of paddle
+                ballX < paddleRightEdgeX) { // left of the rigth side of paddle
                 ballSpeedY *= -1;
+
+                // 
+                var centerOfPaddleX = (paddle1X + PADDLE_WIDTH / 2);
+                var ballDistanceFromPaddleCenterX = ballX - centerOfPaddleX;
+                ballSpeedX = ballDistanceFromPaddleCenterX * ballSpeedPct;
             }
         }
 
@@ -68,7 +116,7 @@
             colorRect(0, 0, canvasWidth, canvasHeigth, 'black');
 
             // paddel
-            colorRect((canvasWidth / 2) - (PADDLE_LENGTH / 2), canvasHeigth - PADDLE_THICKNESS, 100, PADDLE_LENGTH, 'white');
+            colorRect(paddle1X, canvasHeigth - PADDLE_DISTANCE_FROM_EDGE, PADDLE_WIDTH, PADDLE_THICKNESS, 'white');
 
             // ball
             colorCircle(ballX, ballY, ballRadius, 'blue');
