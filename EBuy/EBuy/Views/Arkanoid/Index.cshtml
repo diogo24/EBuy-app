@@ -14,18 +14,36 @@
         var canvasHeigth = 600;
 
         // paddle
-        var paddle1X = 350;
-        const PADDLE_THICKNESS = 10;
+        var paddle1X                    = 350;
+        const PADDLE_THICKNESS          = 10;
         const PADDLE_DISTANCE_FROM_EDGE = 60;
-        const PADDLE_WIDTH = 100;
+        const PADDLE_WIDTH              = 100;
 
         // ball
-        var ballRadius = 10;
-        var ballX      = canvasWidth / 2;
-        var ballY      = canvasHeigth / 2;
-        var ballSpeedX = 5;
-        var ballSpeedY = 5;
+        var ballRadius   = 10;
+        var ballX        = canvasWidth / 2;
+        var ballY        = canvasHeigth / 2;
+        var ballSpeedX   = 5;
+        var ballSpeedY   = 5;
         var ballSpeedPct = 0.35;
+
+        // mouse 
+        var mouseX = 0;
+        var mouseY = 0;
+
+        // bricks
+        const BRICK_W = 50;
+        const BRICK_H = 10;
+        const BRICK_N = 10;
+
+        //var brick1 = true;
+        //var brick2 = false;
+        //var brick3 = true;
+        //var brick4 = true;
+        //var brickGrid = [brick1, brick2, brick3, brick4];
+        var brickGrid = new Array(BRICK_N);
+        
+
 
         $(function () {
             arkanoidCanvas = $("#arkanoid-canvas");
@@ -41,16 +59,18 @@
             // add mouse events
             arkanoidCanvas.mousemove(function (evt) {
                 var mousePos = calculateMousePos(evt);
-                paddle1X = mousePos.x - (PADDLE_WIDTH / 2);
+                paddle1X     = mousePos.x - (PADDLE_WIDTH / 2);
             });
 
+            // reset bricks
+            brickReset();
         });
 
         function calculateMousePos(evt) {
             var rect = arkanoidCanvas[0].getBoundingClientRect();
             var root = document.documentElement;
-            var mouseX = evt.clientX - rect.left - root.scrollLeft;
-            var mouseY = evt.clientY - rect.top - root.scrollTop;
+            mouseX   = evt.clientX - rect.left - root.scrollLeft;
+            mouseY   = evt.clientY - rect.top - root.scrollTop;
             return {
                 x: mouseX,
                 y: mouseY
@@ -60,6 +80,15 @@
         function callCanvasFunctions() {
             moveInCanvas();
             drawInCanvas();
+        }
+
+        function brickReset() {
+            for (var i = 0; i < brickGrid.length; i++) {
+                brickGrid[i] = true;
+            }
+
+            var randomHiddenBrick = ((BRICK_N - 1) * Math.random()).toFixed();
+            brickGrid[randomHiddenBrick] = false;
         }
 
         function ballReset() {
@@ -120,7 +149,36 @@
 
             // ball
             colorCircle(ballX, ballY, ballRadius, 'blue');
+
+            drawBricks();
+
+            // print mouse position
+            colorText(mouseX + "," + mouseY, mouseX, mouseY, "yellow");
         }
+
+        function drawBricks() {
+            
+            // display individual bicks
+            //if(brick1) {
+            //    colorRect(0, 0, BRICK_W, BRICK_H, 'red');
+            //}
+            //if (brick2) {
+            //    colorRect(BRICK_W + 5, 0, BRICK_W, BRICK_H, 'red');
+            //}
+            //if (brick3) {
+            //    colorRect(BRICK_W * 2 + 5 * 2, 0, BRICK_W, BRICK_H, 'red');
+            //}
+            //if (brick4) {
+            //    colorRect(BRICK_W * 3 + 5 * 3, 0, BRICK_W, BRICK_H, 'red');
+            //}
+
+            // display bricks row
+            for (var i = 0; i < brickGrid.length; i++) {
+                if (brickGrid[i]) {
+                    colorRect(BRICK_W * i + 5 * i, 0, BRICK_W, BRICK_H, 'red');
+                } // end of is this brick visible
+            } // end of for each display brick
+        } // end of drawBricks function
 
         // shapes helper functions
         function colorRect(leftX, topX, width, heigth, color) {
@@ -133,6 +191,11 @@
             canvasContext.beginPath();
             canvasContext.arc(leftX, topX, radius, 0, Math.PI * 2, true);
             canvasContext.fill();
+        }
+
+        function colorText(textString, textX, textY, fillColor) {
+            canvasContext.fillStyle = fillColor;
+            canvasContext.fillText(textString, textX, textY);
         }
 
     </script>
