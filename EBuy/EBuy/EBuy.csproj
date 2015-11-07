@@ -183,6 +183,7 @@
     <Compile Include="Controllers\EBuy\AuctionsController.cs" />
     <Compile Include="Controllers\GameDev\ArkanoidController.cs" />
     <Compile Include="Controllers\GameDev\GameDevController.cs" />
+    <Compile Include="Controllers\GameDev\RacingController.cs" />
     <Compile Include="Controllers\GameDev\TennisController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Learning\ContainerController.cs" />
@@ -407,6 +408,7 @@
     <Content Include="Views\Tennis\Index.cshtml" />
     <Content Include="Views\Shared\_LayoutGameDev.cshtml" />
     <Content Include="Views\Arkanoid\Index.cshtml" />
+    <Content Include="Views\Racing\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
