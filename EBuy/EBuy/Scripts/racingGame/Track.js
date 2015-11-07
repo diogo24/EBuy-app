@@ -26,14 +26,6 @@ const TRACK_ROAD         = 0;
 const TRACK_WALL         = 1;
 const TRACK_PLAYER_START = 2;
 
-var roadPic = document.createElement("img");
-var wallPic = document.createElement("img");
-
-function trackLoadImages() {
-    roadPic.src = "/Content/racingGame/track_road.png";
-    wallPic.src = "/Content/racingGame/track_wall.png";
-}
-
 function carTrackHandling() {
     // car position in the grid
     var carTrackCol = Math.floor(carX / TRACK_W);

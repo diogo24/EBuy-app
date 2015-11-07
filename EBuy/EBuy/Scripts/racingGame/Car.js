@@ -1,7 +1,4 @@
-﻿var carPic       = document.createElement("img");
-var carPicLoaded = false;
-
-// car
+﻿// car
 var carX     = 75; //canvasWidth / 2;
 var carY     = 75; //canvasHeigth / 2;
 var carSpeed = 0;
@@ -11,14 +8,6 @@ const GROUNDSPEED_DECAY_MLT = 0.94;
 const DRIVE_POWER           = 0.5;
 const REVERSE_POWER         = 0.2;
 const TURN_RATE = 0.03;
-
-function carImageLoad() {
-    // import picture
-    carPic.onload = function () {
-        carPicLoaded = true;
-    };
-    carPic.src = "/Content/racingGame/car2.png";
-}
 
 function carReset() {
     for (var rowIdx = 0; rowIdx < TRACK_ROWS; rowIdx++) {
@@ -62,7 +51,7 @@ function carMove() {
 
 function carDraw() {
     // car
-    if (carPicLoaded) {
+    //if (carPicLoaded) {
         drawBitMapCenteredWithRotation(carPic, carX, carY, carAng);
-    }
+    //}
 }

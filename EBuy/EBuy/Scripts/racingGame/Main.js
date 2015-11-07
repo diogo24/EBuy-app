@@ -13,18 +13,33 @@ $(function () {
     canvasWidth  = racingCanvas.width();
     canvasHeigth = racingCanvas.height();
 
-    // draw multiple time: simulate movement
+    //// draw multiple time: simulate movement
+    //var framesPerSecond = 60;
+    //setInterval(callCanvasFunctions, 1000 / framesPerSecond);
+
+    //setupInput();
+
+    ////trackLoadImages();
+    ////carImageLoad();
+    //loadImages();
+
+    //// reset tracks
+    //carReset();
+
+    colorRect(0, 0, canvasWidth, canvasHeigth, "green");
+    colorText("Loading Images", canvasWidth / 2, canvasHeigth / 2, "white");
+
+    //redesign game start
+    loadImages();
+});
+
+function imageLoadingDoneSoStartGame() {
     var framesPerSecond = 60;
     setInterval(callCanvasFunctions, 1000 / framesPerSecond);
 
     setupInput();
-
-    trackLoadImages();
-    carImageLoad();
-
-    // reset tracks
     carReset();
-});
+}
 
 function callCanvasFunctions() {
     moveInCanvas();

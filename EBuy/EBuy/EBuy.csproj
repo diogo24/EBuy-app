@@ -363,6 +363,7 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\racingGame\Car.js" />
     <Content Include="Scripts\racingGame\GraphicsCommon.js" />
+    <Content Include="Scripts\racingGame\ImagesLoading.js" />
     <Content Include="Scripts\racingGame\Input.js" />
     <Content Include="Scripts\racingGame\Main.js" />
     <Content Include="Scripts\racingGame\Track.js" />
