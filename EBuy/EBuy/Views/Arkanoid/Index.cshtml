@@ -24,7 +24,7 @@
         var ballX        = canvasWidth / 2;
         var ballY        = canvasHeigth / 2;
         var ballSpeedX   = 5;
-        var ballSpeedY   = 5;
+        var ballSpeedY   = 7;
         var ballSpeedPct = 0.35;
 
         // mouse 
@@ -33,7 +33,7 @@
 
         // bricks
         const BRICK_W    = 80;
-        const BRICK_H    = 20;
+        const BRICK_H    = 40; // 20; // temporarily doubled for test
         const BRICK_COLS = 10;
         const BRICK_ROWS = 10;
         const BRICK_GAP  = 5;
@@ -53,13 +53,19 @@
             canvasHeigth = arkanoidCanvas.height();
 
             // draw multiple time: simulate movement
-            var framesPerSecond = 60;
+            var framesPerSecond = 30; //60; // temporarily slower for test
             setInterval(callCanvasFunctions, 1000 / framesPerSecond);
 
             // add mouse events
             arkanoidCanvas.mousemove(function (evt) {
                 var mousePos = calculateMousePos(evt);
                 paddle1X     = mousePos.x - (PADDLE_WIDTH / 2);
+
+                // cheat/hack to test ball in any position
+                ballX = mouseX;
+                ballY = mouseY;
+                ballSpeedX = 4;
+                ballSpeedY = -4;
             });
 
             // reset bricks
@@ -110,6 +116,14 @@
         }
 
         function moveInCanvas() {
+            ballMove();
+
+            ballPaddlingHandling();
+
+            ballBrickHandling();
+        }
+
+        function ballMove() {
             // ball
             ballX += ballSpeedX;
             ballY += ballSpeedY;
@@ -130,14 +144,79 @@
                 ballReset();
                 //ballSpeedY *= -1;
             }
+        }
+
+        function ballBrickHandling() {
+            // ball position in the grid
+            var ballBrickCol = Math.floor(ballX / BRICK_W);
+            var ballBrickRow = Math.floor(ballY / BRICK_H);
+
+            // remove bricks with ball
+            if (ballBrickCol >= 0
+                && ballBrickCol < BRICK_COLS
+                && ballBrickRow >= 0
+                && ballBrickRow < BRICK_ROWS) {
+
+                // remove brick and change ball direction
+                if (brickGrid[ballBrickRow][ballBrickCol]) {
+                    brickGrid[ballBrickRow][ballBrickCol] = false;
+                    //ballSpeedY *= -1;             
+
+                    var prevBallX   = ballX - ballSpeedX;
+                    var prevBallY   = ballY - ballSpeedY;
+                    var prevBrickCol = Math.floor(prevBallX / BRICK_W);
+                    var prevBrickRow = Math.floor(prevBallY / BRICK_H);
+
+                    // ball boucing from bricks version 1
+                    //if (prevBrickCol != ballBrickCol) {
+                    //    ballSpeedX *= -1;
+                    //}
+
+                    //if (prevBrickRow != ballBrickRow) {
+                    //    ballSpeedY *= -1;
+                    //}
+
+
+                    var bothTestsFailed = true;
+                    // ball boucing from bricks version 2
+                    // bouce ball ajusted to adjacent bricks
+                    if (prevBrickCol != ballBrickCol) {
+                        
+                        // adjacent brick sides
+                        if(!brickGrid[ballBrickRow][prevBrickCol]) {
+                            ballSpeedX *= -1;
+                            bothTestsFailed = false;
+                        }
+                    }
+
+                    if (prevBrickRow != ballBrickRow) {
+
+                        // adjacent brick top bottom
+                        if (!brickGrid[prevBrickRow][ballBrickCol]) {
+                            ballSpeedY *= -1;
+                            bothTestsFailed = false;
+                        }
+                    }
+
+                    // armpit case
+                    if (bothTestsFailed) {
+                        ballSpeedX *= -1;
+                        ballSpeedY *= -1;
+                    }
+                    
+                } // end of brick found
+            } // end of valid col and row
+        } // end of ballBrickHandling func
+
+        function ballPaddlingHandling() {
 
             // paddle
-            var paddleTopEdgeY    = canvasHeigth - PADDLE_DISTANCE_FROM_EDGE;
+            var paddleTopEdgeY = canvasHeigth - PADDLE_DISTANCE_FROM_EDGE;
             var paddleBottomEdgeY = paddleTopEdgeY + PADDLE_THICKNESS;
-            var paddleLeftEdgeX   = paddle1X;
-            var paddleRightEdgeX  = paddleLeftEdgeX + PADDLE_WIDTH;
+            var paddleLeftEdgeX = paddle1X;
+            var paddleRightEdgeX = paddleLeftEdgeX + PADDLE_WIDTH;
 
-            if(ballY > paddleTopEdgeY && // below the top of the paddle
+            if (ballY > paddleTopEdgeY && // below the top of the paddle
                 ballY < paddleBottomEdgeY && // above bottom of paddle
                 ballX > paddleLeftEdgeX &&  // right of left side of paddle
                 ballX < paddleRightEdgeX) { // left of the rigth side of paddle
@@ -148,24 +227,6 @@
                 var ballDistanceFromPaddleCenterX = ballX - centerOfPaddleX;
                 ballSpeedX = ballDistanceFromPaddleCenterX * ballSpeedPct;
             }
-
-            
-            // ball position in the grid
-            var ballBrickCol = Math.floor(ballX / BRICK_W);
-            var ballBrickRow = Math.floor(ballY / BRICK_H);
-
-            // remove bricks with ball
-            if (ballBrickCol >= 0
-                && ballBrickCol < BRICK_COLS
-                && ballBrickRow >= 0
-                && ballBrickRow < BRICK_ROWS) {                
-
-                if (brickGrid[ballBrickRow][ballBrickCol]) {
-                    brickGrid[ballBrickRow][ballBrickCol] = false;
-                    ballSpeedY *= -1;
-                }
-            }
-
         }
 
         function drawInCanvas() {
