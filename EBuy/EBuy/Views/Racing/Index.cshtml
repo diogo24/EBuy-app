@@ -21,7 +21,7 @@
         // car
         var carX     = canvasWidth / 2;
         var carY     = canvasHeigth / 2;
-        var carSpeed = 0.2;
+        var carSpeed = 0;
         var carAng   = 0;
 
         // mouse 
@@ -40,6 +40,11 @@
         const KEY_UP_ARROW    = 38;
         const KEY_RIGTH_ARROW = 39;
         const KEY_DOWN_ARROW  = 40;
+
+        var keyHeld_Gas       = false;
+        var keyHeld_Reverse   = false;
+        var keyHeld_TurnLeft  = false;
+        var keyHeld_TurnRight = false;
 
         //var trackGrid = new Array(TRACK_ROWS);
         var trackGrid = [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
@@ -96,19 +101,23 @@
         function keyPressed(evt) {
             // console.log("Key pressed" + evt.keyCode);
             if (evt.keyCode == KEY_LEFT_ARROW) {
-                carAng -= 0.5;
+                //carAng -= 0.5;
+                keyHeld_TurnLeft = true;                
             }
 
             if (evt.keyCode == KEY_RIGTH_ARROW) {
-                carAng += 0.5;
+                //carAng += 0.5;
+                keyHeld_TurnRight = true;                
             }
 
             if (evt.keyCode == KEY_UP_ARROW) {
-                carSpeed += 0.5;
+                //carSpeed += 0.5;
+                keyHeld_Gas = true;                
             }
 
             if (evt.keyCode == KEY_DOWN_ARROW) {
-                carSpeed -= 0.5;
+                //carSpeed -= 0.5;
+                keyHeld_Reverse = true;
             }
 
             evt.preventDefault();
@@ -116,6 +125,21 @@
 
         function keyReleased(evt) {
             console.log("Key released" + evt.keyCode);
+            if (evt.keyCode == KEY_LEFT_ARROW) {
+                keyHeld_TurnLeft = false;
+            }
+
+            if (evt.keyCode == KEY_RIGTH_ARROW) {
+                keyHeld_TurnRight = false;
+            }
+
+            if (evt.keyCode == KEY_UP_ARROW) {
+                keyHeld_Gas = false;
+            }
+
+            if (evt.keyCode == KEY_DOWN_ARROW) {
+                keyHeld_Reverse = false;
+            }
         }
 
         function calculateMousePos(evt) {
@@ -139,6 +163,9 @@
                 for (var colIdX = 0; colIdX < TRACK_COLS; colIdX++) {
                     if (trackGrid[rowIdx][colIdX] == 2) {
                         trackGrid[rowIdx][colIdX] = 0;
+                        
+                        carAng = -Math.PI / 2;
+
                         // car position + center car
                         carX = TRACK_W * colIdX + (TRACK_W / 2);
                         carY = TRACK_H * rowIdx + (TRACK_H / 2);
@@ -155,6 +182,22 @@
         }
 
         function carMove() {
+            // degrade spead - attrition
+            carSpeed *= 0.98;
+
+            if (keyHeld_Gas) {
+                carSpeed += 0.3;
+            }
+            if (keyHeld_Reverse) {
+                carSpeed -= 0.3;
+            }
+            if (keyHeld_TurnLeft) {
+                carAng -= 0.04;
+            }
+            if (keyHeld_TurnRight) {
+                carAng += 0.04;
+            }
+
             // car
             carX += Math.cos(carAng) * carSpeed;
             carY += Math.sin(carAng) * carSpeed;
@@ -173,8 +216,13 @@
                 && carTrackRow < TRACK_ROWS) {
 
                 // remove track and change car direction
-                if (trackGrid[carTrackRow] && trackGrid[carTrackRow][carTrackCol] == 1) {                   
-                    carSpeed *= -0.1;
+                if (trackGrid[carTrackRow] && trackGrid[carTrackRow][carTrackCol] == 1) {
+                    // next 2 lines added to fix bug, undoes the cr movement which got it onto the wall            
+                    
+                    carX -= Math.cos(carAng) * carSpeed;
+                    carY -= Math.sin(carAng) * carSpeed;
+
+                    carSpeed *= -0.5;
                 } // end of track found
             } // end of valid col and row
         } // end of carTrackHandling func
