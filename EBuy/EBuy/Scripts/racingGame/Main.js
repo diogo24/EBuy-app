@@ -19,6 +19,7 @@ $(function () {
 
     setupInput();
 
+    trackLoadImages();
     carImageLoad();
 
     // reset tracks
@@ -37,11 +38,11 @@ function moveInCanvas() {
 }
 
 function drawInCanvas() {
-    clearScreen();
+    //clearScreen();
+    
+    drawTracks();
 
     carDraw();
-
-    drawTracks();
 
     // mouse position in the grid
     var mouseTrackCol = Math.floor(mouseX / TRACK_W);

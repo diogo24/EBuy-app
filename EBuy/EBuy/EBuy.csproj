@@ -208,6 +208,8 @@
     <Content Include="Content\ie.css" />
     <Content Include="Content\print.css" />
     <Content Include="Content\racingGame\car.png" />
+    <Content Include="Content\racingGame\track_road.png" />
+    <Content Include="Content\racingGame\track_wall.png" />
     <Content Include="Content\screen.css" />
     <Content Include="Content\Site.css" />
     <Content Include="favicon.ico" />

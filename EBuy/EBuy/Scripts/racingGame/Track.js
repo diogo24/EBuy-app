@@ -26,6 +26,14 @@ const TRACK_ROAD         = 0;
 const TRACK_WALL         = 1;
 const TRACK_PLAYER_START = 2;
 
+var roadPic = document.createElement("img");
+var wallPic = document.createElement("img");
+
+function trackLoadImages() {
+    roadPic.src = "/Content/racingGame/track_road.png";
+    wallPic.src = "/Content/racingGame/track_wall.png";
+}
+
 function carTrackHandling() {
     // car position in the grid
     var carTrackCol = Math.floor(carX / TRACK_W);
@@ -54,8 +62,12 @@ function drawTracks() {
     for (var rowIdx = 0; rowIdx < TRACK_ROWS; rowIdx++) {
         for (var colIdX = 0; colIdX < TRACK_COLS; colIdX++) {
             if (trackGrid[rowIdx][colIdX] == TRACK_WALL) {
-                colorRect((TRACK_W * colIdX), (TRACK_H * rowIdx), TRACK_W - TRACK_GAP, TRACK_H - TRACK_GAP, 'red');
+                canvasContext.drawImage(wallPic, TRACK_W * colIdX, TRACK_H * rowIdx);
+                //colorRect((TRACK_W * colIdX), (TRACK_H * rowIdx), TRACK_W - TRACK_GAP, TRACK_H - TRACK_GAP, 'red');
             } // end of is this track visible
+            else {                
+                canvasContext.drawImage(roadPic, TRACK_W * colIdX, TRACK_H * rowIdx);
+            }
         } // end of for each display track
     }
 } // end of drawTracks function
