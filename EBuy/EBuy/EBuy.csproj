@@ -207,6 +207,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\ie.css" />
     <Content Include="Content\print.css" />
+    <Content Include="Content\racingGame\car.png" />
     <Content Include="Content\screen.css" />
     <Content Include="Content\Site.css" />
     <Content Include="favicon.ico" />
@@ -329,6 +330,7 @@
       <DebugInfo>False</DebugInfo>
     </Content>
     <Content Include="sass\Site.css.map" />
+    <Content Include="Content\racingGame\car2.png" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\foundation\fastclick.js" />
     <Content Include="Scripts\foundation\foundation.abide.js" />

@@ -8,6 +8,9 @@
 
 @section Scripts {
     <script type="text/javascript">
+        var carPic       = document.createElement("img");
+        var carPicLoaded = false;
+
         var racingCanvas;
         var canvasContext;
 
@@ -73,6 +76,12 @@
                 //ballSpeedY = -4;
             });
 
+            // import picture
+            carPic.onload = function () {
+                carPicLoaded = true;
+            };
+            carPic.src = "/Content/racingGame/car2.png";
+
             // reset tracks
             ballReset();
         });
@@ -108,7 +117,7 @@
         }
 
         function moveInCanvas() {
-            //ballMove();
+            ballMove();
 
             ballTrackHandling();
         }
@@ -190,7 +199,10 @@
             colorRect(0, 0, canvasWidth, canvasHeigth, 'black');
 
             // ball
-            colorCircle(ballX, ballY, ballRadius, 'blue');
+            //colorCircle(ballX, ballY, ballRadius, 'blue');
+            if (carPicLoaded) {
+                canvasContext.drawImage(carPic, ballX - carPic.width / 2, ballY - carPic.height / 2);
+            }
 
             drawTracks();
 
