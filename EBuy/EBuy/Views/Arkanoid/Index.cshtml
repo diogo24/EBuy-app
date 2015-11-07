@@ -32,19 +32,19 @@
         var mouseY = 0;
 
         // bricks
-        const BRICK_W = 50;
-        const BRICK_H = 10;
-        const BRICK_N = 10;
+        const BRICK_W    = 80;
+        const BRICK_H    = 20;
+        const BRICK_COLS = 10;
+        const BRICK_ROWS = 10;
+        const BRICK_GAP  = 5;
 
         //var brick1 = true;
         //var brick2 = false;
         //var brick3 = true;
         //var brick4 = true;
         //var brickGrid = [brick1, brick2, brick3, brick4];
-        var brickGrid = new Array(BRICK_N);
+        var brickGrid = new Array(BRICK_ROWS);
         
-
-
         $(function () {
             arkanoidCanvas = $("#arkanoid-canvas");
             canvasContext  = arkanoidCanvas[0].getContext('2d');
@@ -64,6 +64,7 @@
 
             // reset bricks
             brickReset();
+            ballReset();
         });
 
         function calculateMousePos(evt) {
@@ -83,12 +84,21 @@
         }
 
         function brickReset() {
-            for (var i = 0; i < brickGrid.length; i++) {
-                brickGrid[i] = true;
+            //for (var i = 0; i < brickGrid.length; i++) {
+            //    brickGrid[i] = true;
+            //}
+
+            for (var rowIdx = 0; rowIdx < BRICK_ROWS; rowIdx++) {
+                brickGrid[rowIdx] = new Array(BRICK_COLS);
+
+                for (var colIdx = 0; colIdx < BRICK_COLS; colIdx++) {
+                    brickGrid[rowIdx][colIdx] = true;
+                }
             }
 
-            var randomHiddenBrick = ((BRICK_N - 1) * Math.random()).toFixed();
-            brickGrid[randomHiddenBrick] = false;
+            // random hide bricks
+            //var randomHiddenBrick = ((BRICK_N - 1) * Math.random()).toFixed();
+            //brickGrid[randomHiddenBrick] = false;
         }
 
         function ballReset() {
@@ -138,6 +148,24 @@
                 var ballDistanceFromPaddleCenterX = ballX - centerOfPaddleX;
                 ballSpeedX = ballDistanceFromPaddleCenterX * ballSpeedPct;
             }
+
+            
+            // ball position in the grid
+            var ballBrickCol = Math.floor(ballX / BRICK_W);
+            var ballBrickRow = Math.floor(ballY / BRICK_H);
+
+            // remove bricks with ball
+            if (ballBrickCol >= 0
+                && ballBrickCol < BRICK_COLS
+                && ballBrickRow >= 0
+                && ballBrickRow < BRICK_ROWS) {                
+
+                if (brickGrid[ballBrickRow][ballBrickCol]) {
+                    brickGrid[ballBrickRow][ballBrickCol] = false;
+                    ballSpeedY *= -1;
+                }
+            }
+
         }
 
         function drawInCanvas() {
@@ -151,9 +179,22 @@
             colorCircle(ballX, ballY, ballRadius, 'blue');
 
             drawBricks();
+            
+            // mouse position in the grid
+            var mouseBrickCol = Math.floor(mouseX / BRICK_W);
+            var mouseBrickRow = Math.floor(mouseY / BRICK_H);
 
             // print mouse position
-            colorText(mouseX + "," + mouseY, mouseX, mouseY, "yellow");
+            //colorText(mouseX + "," + mouseY, mouseX, mouseY, "yellow");
+            colorText(mouseBrickCol + "," + mouseBrickRow, mouseX, mouseY, "yellow");
+
+            // remove brick with mouse
+            //if(mouseBrickCol >= 0
+            //    && mouseBrickCol < BRICK_COLS
+            //    && mouseBrickRow >= 0
+            //    && mouseBrickRow < BRICK_ROWS) {
+            //    brickGrid[mouseBrickRow][mouseBrickCol] = false;
+            //}
         }
 
         function drawBricks() {
@@ -173,11 +214,27 @@
             //}
 
             // display bricks row
-            for (var i = 0; i < brickGrid.length; i++) {
-                if (brickGrid[i]) {
-                    colorRect(BRICK_W * i + 5 * i, 0, BRICK_W, BRICK_H, 'red');
-                } // end of is this brick visible
-            } // end of for each display brick
+            //for (var i = 0; i < brickGrid.length; i++) {
+            //    if (brickGrid[i]) {
+            //        colorRect(BRICK_W * i, 0, BRICK_W - BRICK_GAP, BRICK_H - BRICK_GAP, 'red');
+            //    } // end of is this brick visible
+            //} // end of for each display brick
+
+            //for (var i = 0; i < brickGrid.length; i++) {
+            //    if (brickGrid[i]) {
+            //        colorRect(BRICK_W * i, BRICK_H, BRICK_W - BRICK_GAP, BRICK_H - BRICK_GAP, 'red');
+            //    } // end of is this brick visible
+            //} // end of for each display brick
+
+            // display bricks grid
+            for (var rowIdx = 0; rowIdx < BRICK_ROWS; rowIdx++) {
+                for (var colIdX = 0; colIdX < BRICK_COLS; colIdX++) {
+                    if (brickGrid[rowIdx][colIdX]) {
+                        //colorRect(BRICK_W * colIdX, BRICK_H * rowIdx, BRICK_W - BRICK_GAP, BRICK_H - BRICK_GAP, 'red');
+                        colorRect((BRICK_W * colIdX), (BRICK_H * rowIdx), BRICK_W - BRICK_GAP, BRICK_H - BRICK_GAP, 'red');
+                    } // end of is this brick visible
+                } // end of for each display brick
+            }
         } // end of drawBricks function
 
         // shapes helper functions
