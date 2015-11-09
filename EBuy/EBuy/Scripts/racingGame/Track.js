@@ -5,26 +5,30 @@ const TRACK_COLS = 20;
 const TRACK_ROWS = 15;
 const TRACK_GAP  = 5;
 
-var trackGrid = [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-                 [1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1],
-                 [1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+var trackGrid = [[4, 4, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4],
+                 [4, 4, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1],
+                 [4, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
                  [1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1],
-                 [1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1],
-                 [1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 1],
+                 [1, 0, 0, 0, 1, 1, 1, 1, 4, 4, 4, 1, 1, 1, 1, 1, 1, 0, 0, 1],
+                 [1, 0, 0, 1, 1, 0, 0, 1, 1, 4, 1, 1, 0, 0, 0, 0, 1, 0, 0, 1],
                  [1, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1],
-                 [1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1],
-                 [1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1],
-                 [1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1],
-                 [1, 0, 2, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1],
+                 [1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 5, 0, 0, 1, 0, 0, 1],
+                 [1, 0, 0, 1, 0, 0, 5, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1],
+                 [1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 5, 0, 0, 1, 0, 0, 1, 0, 0, 1],
+                 [1, 0, 2, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 5, 0, 0, 1],
                  [1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1],
-                 [1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1],
-                 [1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1],
-                 [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+                 [0, 3, 0, 0, 0, 0, 1, 4, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1],
+                 [0, 3, 0, 0, 0, 0, 1, 4, 4, 1, 1, 1, 1, 4, 1, 0, 0, 0, 1, 1],
+                 [1, 1, 1, 1, 1, 1, 1, 4, 4, 4, 4, 4, 4, 4, 1, 1, 1, 1, 1, 4]
 ];
 
 const TRACK_ROAD         = 0;
 const TRACK_WALL         = 1;
 const TRACK_PLAYER_START = 2;
+const TRACK_END_FLAG     = 3;
+const TRACK_TREE         = 4;
+const TRACK_FLAG         = 5;
+
 
 function carTrackHandling() {
     // car position in the grid
@@ -53,13 +57,38 @@ function drawTracks() {
     // display tracks grid
     for (var rowIdx = 0; rowIdx < TRACK_ROWS; rowIdx++) {
         for (var colIdX = 0; colIdX < TRACK_COLS; colIdX++) {
-            if (trackGrid[rowIdx][colIdX] == TRACK_WALL) {
-                canvasContext.drawImage(wallPic, TRACK_W * colIdX, TRACK_H * rowIdx);
-                //colorRect((TRACK_W * colIdX), (TRACK_H * rowIdx), TRACK_W - TRACK_GAP, TRACK_H - TRACK_GAP, 'red');
-            } // end of is this track visible
-            else {                
-                canvasContext.drawImage(roadPic, TRACK_W * colIdX, TRACK_H * rowIdx);
+            //if (trackGrid[rowIdx][colIdX] == TRACK_WALL) {
+            //    canvasContext.drawImage(wallPic, TRACK_W * colIdX, TRACK_H * rowIdx);
+            //    //colorRect((TRACK_W * colIdX), (TRACK_H * rowIdx), TRACK_W - TRACK_GAP, TRACK_H - TRACK_GAP, 'red');
+            //} // end of is this track visible
+            //else {                
+            //    canvasContext.drawImage(roadPic, TRACK_W * colIdX, TRACK_H * rowIdx);
+            //}
+
+            var imgPic;
+
+            switch (trackGrid[rowIdx][colIdX]) {
+                case TRACK_ROAD:
+                    imgPic = roadPic;
+                    break;
+                case TRACK_WALL:
+                    imgPic = wallPic;
+                    break;
+                case TRACK_TREE:
+                    imgPic = treePic;
+                    break;
+                case TRACK_END_FLAG:
+                    imgPic = endFlagPic;
+                    break;
+                case TRACK_FLAG:
+                    imgPic = flagPic;
+                    break;
+                    
+                default:
             }
+
+            canvasContext.drawImage(imgPic, TRACK_W * colIdX, TRACK_H * rowIdx);
+
         } // end of for each display track
     }
 } // end of drawTracks function

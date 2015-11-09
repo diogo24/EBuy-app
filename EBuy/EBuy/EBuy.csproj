@@ -208,7 +208,10 @@
     <Content Include="Content\ie.css" />
     <Content Include="Content\print.css" />
     <Content Include="Content\racingGame\car.png" />
+    <Content Include="Content\racingGame\track_endFlag.png" />
+    <Content Include="Content\racingGame\track_flag.png" />
     <Content Include="Content\racingGame\track_road.png" />
+    <Content Include="Content\racingGame\track_tree.png" />
     <Content Include="Content\racingGame\track_wall.png" />
     <Content Include="Content\screen.css" />
     <Content Include="Content\Site.css" />

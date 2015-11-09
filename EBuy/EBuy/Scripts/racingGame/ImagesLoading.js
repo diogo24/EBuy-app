@@ -43,6 +43,9 @@ function loadImages() {
         { varName: carPic, fileName: "/Content/racingGame/car2.png" },
         { varName: roadPic, fileName: "/Content/racingGame/track_road.png" },
         { varName: wallPic, fileName: "/Content/racingGame/track_wall.png" },
+        { varName: endFlagPic, fileName: "/Content/racingGame/track_endFlag.png" },
+        { varName: treePic, fileName: "/Content/racingGame/track_tree.png" },
+        { varName: flagPic, fileName: "/Content/racingGame/track_flag.png" },
     ];
 
     picsToLoad = imageList.length;
@@ -50,3 +53,8 @@ function loadImages() {
         beginLoadingImage(imageList[index].varName, imageList[index].fileName);
     }    
 }
+
+// track extra images load
+var endFlagPic = document.createElement("img");
+var treePic    = document.createElement("img");
+var flagPic    = document.createElement("img");
