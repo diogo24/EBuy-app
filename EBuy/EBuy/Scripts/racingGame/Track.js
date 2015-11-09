@@ -55,6 +55,8 @@ function carTrackHandling() {
 
 function drawTracks() {
     // display tracks grid
+    var drawTileX = 0;
+    var drawTileY = 0;
     for (var rowIdx = 0; rowIdx < TRACK_ROWS; rowIdx++) {
         for (var colIdX = 0; colIdX < TRACK_COLS; colIdX++) {
             //if (trackGrid[rowIdx][colIdX] == TRACK_WALL) {
@@ -65,30 +67,14 @@ function drawTracks() {
             //    canvasContext.drawImage(roadPic, TRACK_W * colIdX, TRACK_H * rowIdx);
             //}
 
-            var imgPic;
+            var imgPic = trackPics[trackGrid[rowIdx][colIdX]];
+                       
+            canvasContext.drawImage(imgPic, drawTileX, drawTileY);
 
-            switch (trackGrid[rowIdx][colIdX]) {
-                case TRACK_ROAD:
-                    imgPic = roadPic;
-                    break;
-                case TRACK_WALL:
-                    imgPic = wallPic;
-                    break;
-                case TRACK_TREE:
-                    imgPic = treePic;
-                    break;
-                case TRACK_END_FLAG:
-                    imgPic = endFlagPic;
-                    break;
-                case TRACK_FLAG:
-                    imgPic = flagPic;
-                    break;
-                    
-                default:
-            }
-
-            canvasContext.drawImage(imgPic, TRACK_W * colIdX, TRACK_H * rowIdx);
-
+            drawTileX += TRACK_W;
         } // end of for each display track
+        drawTileX = 0;
+        drawTileY += TRACK_H;
     }
+    drawTileY = 0;
 } // end of drawTracks function
