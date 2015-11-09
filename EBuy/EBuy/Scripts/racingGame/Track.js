@@ -15,7 +15,7 @@ var trackGrid = [[4, 4, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4],
                  [1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 5, 0, 0, 1, 0, 0, 1],
                  [1, 0, 0, 1, 0, 0, 5, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1],
                  [1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 5, 0, 0, 1, 0, 0, 1, 0, 0, 1],
-                 [1, 0, 2, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 5, 0, 0, 1],
+                 [1, 2, 2, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 5, 0, 0, 1],
                  [1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1],
                  [0, 3, 0, 0, 0, 0, 1, 4, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1],
                  [0, 3, 0, 0, 0, 0, 1, 4, 4, 1, 1, 1, 1, 4, 1, 0, 0, 0, 1, 1],
@@ -30,10 +30,10 @@ const TRACK_TREE         = 4;
 const TRACK_FLAG         = 5;
 
 
-function carTrackHandling() {
+function carTrackHandling(carObject) {
     // car position in the grid
-    var carTrackCol = Math.floor(carX / TRACK_W);
-    var carTrackRow = Math.floor(carY / TRACK_H);
+    var carTrackCol = Math.floor(carObject.x / TRACK_W);
+    var carTrackRow = Math.floor(carObject.y / TRACK_H);
 
     // remove tracks with car
     if (carTrackCol >= 0
@@ -45,10 +45,10 @@ function carTrackHandling() {
         if (trackGrid[carTrackRow] && trackGrid[carTrackRow][carTrackCol] == TRACK_WALL) {
             // next 2 lines added to fix bug, undoes the cr movement which got it onto the wall            
 
-            carX -= Math.cos(carAng) * carSpeed;
-            carY -= Math.sin(carAng) * carSpeed;
+            carObject.x -= Math.cos(carObject.ang) * carObject.speed;
+            carObject.y -= Math.sin(carObject.ang) * carObject.speed;
 
-            carSpeed *= -0.5;
+            carObject.speed *= -0.5;
         } // end of track found
     } // end of valid col and row
 } // end of carTrackHandling func

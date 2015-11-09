@@ -8,10 +8,10 @@ const KEY_UP_ARROW    = 38;
 const KEY_RIGTH_ARROW = 39;
 const KEY_DOWN_ARROW  = 40;
 
-var keyHeld_Gas       = false;
-var keyHeld_Reverse   = false;
-var keyHeld_TurnLeft  = false;
-var keyHeld_TurnRight = false;
+const KEY_W = 87;
+const KEY_D = 68;
+const KEY_S = 83;
+const KEY_A = 65;
 
 function setupInput() {
     // add mouse events
@@ -26,6 +26,9 @@ function setupInput() {
 
     document.addEventListener('keydown', keyPressed);
     document.addEventListener('keyup', keyReleased);
+
+    blueCar.setupInput(KEY_UP_ARROW, KEY_RIGTH_ARROW, KEY_DOWN_ARROW, KEY_LEFT_ARROW);
+    greenCar.setupInput(KEY_W, KEY_D, KEY_S, KEY_A);
 }
 
 function calculateMousePos(evt) {
@@ -40,50 +43,37 @@ function calculateMousePos(evt) {
 }
 
 function keyPressed(evt) {
-    // console.log("Key pressed" + evt.keyCode);
-    if (evt.keyCode == KEY_LEFT_ARROW) {
-        //carAng -= 0.5;
-        keyHeld_TurnLeft = true;
-    }
-
-    if (evt.keyCode == KEY_RIGTH_ARROW) {
-        //carAng += 0.5;
-        keyHeld_TurnRight = true;
-    }
-
-    if (evt.keyCode == KEY_UP_ARROW) {
-        //carSpeed += 0.5;
-        keyHeld_Gas = true;
-    }
-
-    if (evt.keyCode == KEY_DOWN_ARROW) {
-        //carSpeed -= 0.5;
-        keyHeld_Reverse = true;
-    }
-
-    if (evt.keyCode == KEY_LEFT_ARROW
-        || evt.keyCode == KEY_RIGTH_ARROW
-        || evt.keyCode == KEY_UP_ARROW
-        || evt.keyCode == KEY_DOWN_ARROW) {
-        evt.preventDefault();
-    }
+    keySet(evt, blueCar, true);
+    keySet(evt, greenCar, true);
 }
 
 function keyReleased(evt) {
-    //console.log("Key released" + evt.keyCode);
-    if (evt.keyCode == KEY_LEFT_ARROW) {
-        keyHeld_TurnLeft = false;
+    keySet(evt, blueCar, false);
+    keySet(evt, greenCar, false);
+}
+
+function keySet(keyEvt, carObject, setTo) {
+    console.log("Key pressed:" + keyEvt.keyCode)
+    if (keyEvt.keyCode == carObject.controlKeyLEFT) {
+        carObject.keyHeld_TurnLeft = setTo;
     }
 
-    if (evt.keyCode == KEY_RIGTH_ARROW) {
-        keyHeld_TurnRight = false;
+    if (keyEvt.keyCode == carObject.controlKeyRIGTH) {
+        carObject.keyHeld_TurnRight = setTo;
     }
 
-    if (evt.keyCode == KEY_UP_ARROW) {
-        keyHeld_Gas = false;
+    if (keyEvt.keyCode == carObject.controlKeyUP) {
+        carObject.keyHeld_Gas = setTo
     }
 
-    if (evt.keyCode == KEY_DOWN_ARROW) {
-        keyHeld_Reverse = false;
+    if (keyEvt.keyCode == carObject.controlKeyDOWN) {
+        carObject.keyHeld_Reverse = setTo;
+    }
+
+    if (keyEvt.keyCode == carObject.controlKeyLEFT
+        || keyEvt.keyCode == carObject.controlKeyRIGTH
+        || keyEvt.keyCode == carObject.controlKeyUP
+        || keyEvt.keyCode == carObject.controlKeyDOWN) {
+        keyEvt.preventDefault();
     }
 }

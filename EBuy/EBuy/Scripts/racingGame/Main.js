@@ -6,6 +6,9 @@ var canvasWidth  = 800;
 var canvasHeigth = 600;
 
 
+var blueCar  = new carClass();
+var greenCar = new carClass();
+
 $(function () {
     racingCanvas  = $("#racing-canvas");
     canvasContext = racingCanvas[0].getContext('2d');
@@ -38,7 +41,8 @@ function imageLoadingDoneSoStartGame() {
     setInterval(callCanvasFunctions, 1000 / framesPerSecond);
 
     setupInput();
-    carReset();
+    blueCar.reset(carPic);
+    greenCar.reset(player2CarPic);
 }
 
 function callCanvasFunctions() {
@@ -47,9 +51,8 @@ function callCanvasFunctions() {
 }
 
 function moveInCanvas() {
-    carMove();
-
-    carTrackHandling();
+    blueCar.move();
+    greenCar.move();
 }
 
 function drawInCanvas() {
@@ -57,7 +60,8 @@ function drawInCanvas() {
     
     drawTracks();
 
-    carDraw();
+    blueCar.draw();
+    greenCar.draw();
 
     // mouse position in the grid
     var mouseTrackCol = Math.floor(mouseX / TRACK_W);

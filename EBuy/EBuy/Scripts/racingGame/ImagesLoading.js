@@ -2,8 +2,9 @@
 var picsToLoad = 0;
 
 // car image load
-var carPic    = document.createElement("img");
-var trackPics = [];
+var carPic        = document.createElement("img");
+var player2CarPic = document.createElement("img");
+var trackPics     = [];
 
 
 function countLoadedImagesAndLauchIdReady() {
@@ -22,6 +23,7 @@ function beginLoadingImage(imgVar, fileName) {
 function loadImages() {
     var imageList = [
         { varName: carPic, fileName: "/Content/racingGame/car2.png" },
+        { varName: player2CarPic, fileName: "/Content/racingGame/car_green.png" },
 
         { trackType: TRACK_ROAD, fileName: "/Content/racingGame/track_road.png" },
         { trackType: TRACK_WALL, fileName: "/Content/racingGame/track_wall.png" },
