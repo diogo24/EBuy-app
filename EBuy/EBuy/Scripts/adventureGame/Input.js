@@ -28,7 +28,6 @@ function setupInput() {
     document.addEventListener('keyup', keyReleased);
 
     blueCar.setupInput(KEY_UP_ARROW, KEY_RIGTH_ARROW, KEY_DOWN_ARROW, KEY_LEFT_ARROW);
-    greenCar.setupInput(KEY_W, KEY_D, KEY_S, KEY_A);
 }
 
 function calculateMousePos(evt) {
@@ -44,12 +43,10 @@ function calculateMousePos(evt) {
 
 function keyPressed(evt) {
     keySet(evt, blueCar, true);
-    keySet(evt, greenCar, true);
 }
 
 function keyReleased(evt) {
     keySet(evt, blueCar, false);
-    keySet(evt, greenCar, false);
 }
 
 function keySet(keyEvt, carObject, setTo) {

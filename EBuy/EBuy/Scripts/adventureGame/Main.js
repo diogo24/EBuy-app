@@ -7,7 +7,6 @@ var canvasHeigth = 600;
 
 
 var blueCar  = new carClass();
-var greenCar = new carClass();
 
 $(function () {
     racingCanvas  = $("#adventure-canvas");
@@ -49,7 +48,6 @@ function loadLevel(level) {
     trackGrid = level.map(function (arr) { return arr.slice(); }); // create a copy of the 2d array
 
     blueCar.reset(carPic, "Blue");
-    greenCar.reset(player2CarPic, "Green");
 }
 
 function callCanvasFunctions() {
@@ -58,8 +56,7 @@ function callCanvasFunctions() {
 }
 
 function moveInCanvas() {
-    blueCar.move();
-    greenCar.move();
+    blueCar.move();  
 }
 
 function drawInCanvas() {
@@ -68,7 +65,6 @@ function drawInCanvas() {
     drawTracks();
 
     blueCar.draw();
-    greenCar.draw();
 
     // mouse position in the grid
     var mouseTrackCol = Math.floor(mouseX / TRACK_W);
