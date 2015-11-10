@@ -1,23 +1,17 @@
-﻿
-const GROUNDSPEED_DECAY_MLT = 0.94;
-const DRIVE_POWER           = 0.5;
-const REVERSE_POWER         = 0.2;
-const TURN_RATE             = 0.06;
-const MIN_SPEED_TO_TURN     = 0.5;
+﻿const WALK_SPEED = 3.0;
 
 // warrior
 function warriorClass() {
     this.x     = 75; //canvasWidth / 2;
     this.y     = 75; //canvasHeigth / 2;
-    this.speed = 0;
-    this.ang   = 0;
     this.warriorPic; // which picture to use
     this.name = "defaultName";
+    this.walkSpeed = WALK_SPEED;
     
-    this.keyHeld_Gas       = false;
-    this.keyHeld_Reverse   = false;
-    this.keyHeld_TurnLeft  = false;
-    this.keyHeld_TurnRight = false;
+    this.keyHeld_North = false;
+    this.keyHeld_South = false;
+    this.keyHeld_West  = false;
+    this.keyHeld_East  = false;
         
     this.controlKeyUP;
     this.controlKeyRIGTH;
@@ -34,14 +28,11 @@ function warriorClass() {
     this.reset = function (warriorImg, warriorName) {
         this.name       = warriorName;
         this.warriorPic = warriorImg;
-        this.speed      = 0;
 
         for (var rowIdx = 0; rowIdx < WORLD_ROWS; rowIdx++) {
             for (var colIdX = 0; colIdX < WORLD_COLS; colIdX++) {
                 if (worldGrid[rowIdx][colIdX] == WORLD_PLAYER_START) {
                     worldGrid[rowIdx][colIdX] = WORLD_ROAD;
-
-                    this.ang = -Math.PI / 2;
 
                     // warrior position + center warrior
                     this.x = WORLD_W * colIdX + (WORLD_W / 2);
@@ -55,37 +46,36 @@ function warriorClass() {
     
     this.move = function() {
         // degrade spead - attrition
-        this.speed *= GROUNDSPEED_DECAY_MLT;
+        var nextX = this.x;
+        var nextY = this.y;
 
-        if (this.keyHeld_Gas) {
-            this.speed += DRIVE_POWER;
+        if (this.keyHeld_North) {
+            nextY -= this.walkSpeed;
         }
-        if (this.keyHeld_Reverse) {
-            this.speed -= REVERSE_POWER;
+        if (this.keyHeld_South) {
+            nextY += this.walkSpeed;
         }
-
-        if (Math.abs(this.speed) > MIN_SPEED_TO_TURN) {
-
-            if (this.keyHeld_TurnLeft) {
-                this.ang -= TURN_RATE;
-            }
-            if (this.keyHeld_TurnRight) {
-                this.ang += TURN_RATE;
-            }
+        if (this.keyHeld_West) {
+            nextX -= this.walkSpeed;
+        }
+        if (this.keyHeld_East) {
+            nextX += this.walkSpeed;
         }
 
-        // warrior
-        this.x += Math.cos(this.ang) * this.speed;
-        this.y += Math.sin(this.ang) * this.speed;
+        var walkIntoTileIndex = getTileTypeAtPixelCoord(nextX, nextY);
 
-        warriorWorldHandling(this);
+        if (walkIntoTileIndex == WORLD_END_FLAG) {
+			console.log(this.name + " WINS!");
+			loadLevel(level1);
+        }
+        else if (walkIntoTileIndex == WORLD_ROAD) {
+			this.x = nextX;
+			this.y = nextY;
+        }
     } // end of warriorMove func
     
     this.draw = function() {
-        // warrior
-        //if (warriorPicLoaded) {
-        drawBitMapCenteredWithRotation(this.warriorPic, this.x, this.y, this.ang);
-        //}
+        drawBitMapCenteredWithRotation(this.warriorPic, this.x, this.y, 0);
     } // end of warriorDraw func
 
 } // end of warriorClass func

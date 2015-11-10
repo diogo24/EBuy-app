@@ -47,19 +47,19 @@ function keyReleased(evt) {
 function keySet(keyEvt, warriorObject, setTo) {
     //console.log("Key pressed:" + keyEvt.keyCode)
     if (keyEvt.keyCode == warriorObject.controlKeyLEFT) {
-        warriorObject.keyHeld_TurnLeft = setTo;
+        warriorObject.keyHeld_West = setTo;
     }
 
     if (keyEvt.keyCode == warriorObject.controlKeyRIGTH) {
-        warriorObject.keyHeld_TurnRight = setTo;
+        warriorObject.keyHeld_East = setTo;
     }
 
     if (keyEvt.keyCode == warriorObject.controlKeyUP) {
-        warriorObject.keyHeld_Gas = setTo
+        warriorObject.keyHeld_North = setTo
     }
 
     if (keyEvt.keyCode == warriorObject.controlKeyDOWN) {
-        warriorObject.keyHeld_Reverse = setTo;
+        warriorObject.keyHeld_South = setTo;
     }
 
     if (keyEvt.keyCode == warriorObject.controlKeyLEFT
