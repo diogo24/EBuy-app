@@ -204,14 +204,12 @@
     <Compile Include="Utils\SingleSignOnAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\adventureGame\car.png" />
-    <Content Include="Content\adventureGame\car2.png" />
-    <Content Include="Content\adventureGame\car_green.png" />
-    <Content Include="Content\adventureGame\track_endFlag.png" />
-    <Content Include="Content\adventureGame\track_flag.png" />
-    <Content Include="Content\adventureGame\track_road.png" />
-    <Content Include="Content\adventureGame\track_tree.png" />
-    <Content Include="Content\adventureGame\track_wall.png" />
+    <Content Include="Content\adventureGame\warrior.png" />
+    <Content Include="Content\adventureGame\world_flag.png" />
+    <Content Include="Content\adventureGame\world_goal.png" />
+    <Content Include="Content\adventureGame\world_road.png" />
+    <Content Include="Content\adventureGame\world_tree.png" />
+    <Content Include="Content\adventureGame\world_wall.png" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\ie.css" />

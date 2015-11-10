@@ -64,7 +64,7 @@ function warriorClass() {
 
         var walkIntoTileIndex = getTileTypeAtPixelCoord(nextX, nextY);
 
-        if (walkIntoTileIndex == WORLD_END_FLAG) {
+        if (walkIntoTileIndex == WORLD_GOAL) {
 			console.log(this.name + " WINS!");
 			loadLevel(level1);
         }

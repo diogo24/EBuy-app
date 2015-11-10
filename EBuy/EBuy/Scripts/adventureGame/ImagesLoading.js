@@ -21,13 +21,13 @@ function beginLoadingImage(imgVar, fileName) {
 
 function loadImages() {
     var imageList = [
-        { varName: warriorPic, fileName: "/Content/adventureGame/car2.png" },
+        { varName: warriorPic, fileName: "/Content/adventureGame/warrior.png" },
 
-        { worldType: WORLD_ROAD, fileName: "/Content/adventureGame/track_road.png" },
-        { worldType: WORLD_WALL, fileName: "/Content/adventureGame/track_wall.png" },
-        { worldType: WORLD_END_FLAG, fileName: "/Content/adventureGame/track_endFlag.png" },
-        { worldType: WORLD_TREE, fileName: "/Content/adventureGame/track_tree.png" },
-        { worldType: WORLD_FLAG, fileName: "/Content/adventureGame/track_flag.png" },
+        { worldType: WORLD_ROAD, fileName: "/Content/adventureGame/world_road.png" },
+        { worldType: WORLD_WALL, fileName: "/Content/adventureGame/world_wall.png" },
+        { worldType: WORLD_GOAL, fileName: "/Content/adventureGame/world_goal.png" },
+        { worldType: WORLD_TREE, fileName: "/Content/adventureGame/world_tree.png" },
+        { worldType: WORLD_FLAG, fileName: "/Content/adventureGame/world_flag.png" },
     ];
 
     picsToLoad = imageList.length;
