@@ -5,7 +5,7 @@ const TRACK_COLS = 20;
 const TRACK_ROWS = 15;
 const TRACK_GAP  = 5;
 
-var trackGrid = [[4, 4, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4],
+var level1 = [[4, 4, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4],
                  [4, 4, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1],
                  [4, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
                  [1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1],
@@ -21,6 +21,9 @@ var trackGrid = [[4, 4, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4],
                  [0, 3, 0, 0, 0, 0, 1, 4, 4, 1, 1, 1, 1, 4, 1, 0, 0, 0, 1, 1],
                  [1, 1, 1, 1, 1, 1, 1, 4, 4, 4, 4, 4, 4, 4, 1, 1, 1, 1, 1, 4]
 ];
+
+//var levelList = [level1]; // list of multiple levels
+var trackGrid = [];
 
 const TRACK_ROAD         = 0;
 const TRACK_WALL         = 1;
@@ -42,7 +45,11 @@ function carTrackHandling(carObject) {
         && carTrackRow < TRACK_ROWS) {
 
         // remove track and change car direction
-        if (trackGrid[carTrackRow] && trackGrid[carTrackRow][carTrackCol] == TRACK_WALL) {
+        if (trackGrid[carTrackRow] &&
+            (trackGrid[carTrackRow][carTrackCol] == TRACK_WALL
+            || trackGrid[carTrackRow][carTrackCol] == TRACK_FLAG
+            )
+            ) {
             // next 2 lines added to fix bug, undoes the cr movement which got it onto the wall            
 
             carObject.x -= Math.cos(carObject.ang) * carObject.speed;
@@ -50,6 +57,11 @@ function carTrackHandling(carObject) {
 
             carObject.speed *= -0.5;
         } // end of track found
+
+        if(trackGrid[carTrackRow] && trackGrid[carTrackRow][carTrackCol] == TRACK_END_FLAG) {
+            //console.log(carObject.name);
+            loadLevel(level1);
+        }
     } // end of valid col and row
 } // end of carTrackHandling func
 

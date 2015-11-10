@@ -39,10 +39,17 @@ $(function () {
 function imageLoadingDoneSoStartGame() {
     var framesPerSecond = 60;
     setInterval(callCanvasFunctions, 1000 / framesPerSecond);
-
+    
     setupInput();
-    blueCar.reset(carPic);
-    greenCar.reset(player2CarPic);
+
+    loadLevel(level1);
+}
+
+function loadLevel(level) {
+    trackGrid = level.map(function (arr) { return arr.slice(); }); // create a copy of the 2d array
+
+    blueCar.reset(carPic, "Blue");
+    greenCar.reset(player2CarPic, "Green");
 }
 
 function callCanvasFunctions() {

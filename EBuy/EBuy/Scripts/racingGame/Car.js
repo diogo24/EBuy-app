@@ -12,6 +12,7 @@ function carClass() {
     this.speed = 0;
     this.ang   = 0;
     this.carPic; // which picture to use
+    this.name = "defaultName";
     
     this.keyHeld_Gas       = false;
     this.keyHeld_Reverse   = false;
@@ -30,8 +31,10 @@ function carClass() {
         this.controlKeyLEFT  = leftKey;
     }
 
-    this.reset = function (carImg) {
+    this.reset = function (carImg, carName) {
+        this.name   = carName;
         this.carPic = carImg;
+        this.speed  = 0;
 
         for (var rowIdx = 0; rowIdx < TRACK_ROWS; rowIdx++) {
             for (var colIdX = 0; colIdX < TRACK_COLS; colIdX++) {
@@ -47,6 +50,7 @@ function carClass() {
                 } // end of is this car start place
             } // end of for each locating car start
         } // end of row for
+        console.log("No PLAYER START FOUND");
     } // end of carReset func
     
     this.move = function() {

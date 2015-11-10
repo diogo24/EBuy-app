@@ -53,7 +53,7 @@ function keyReleased(evt) {
 }
 
 function keySet(keyEvt, carObject, setTo) {
-    console.log("Key pressed:" + keyEvt.keyCode)
+    //console.log("Key pressed:" + keyEvt.keyCode)
     if (keyEvt.keyCode == carObject.controlKeyLEFT) {
         carObject.keyHeld_TurnLeft = setTo;
     }
