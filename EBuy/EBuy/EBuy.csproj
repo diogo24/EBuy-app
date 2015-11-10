@@ -181,6 +181,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\EBuy\AuctionsController.cs" />
+    <Compile Include="Controllers\GameDev\AdventureController.cs" />
     <Compile Include="Controllers\GameDev\ArkanoidController.cs" />
     <Compile Include="Controllers\GameDev\GameDevController.cs" />
     <Compile Include="Controllers\GameDev\RacingController.cs" />
@@ -203,6 +204,14 @@
     <Compile Include="Utils\SingleSignOnAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\adventureGame\car.png" />
+    <Content Include="Content\adventureGame\car2.png" />
+    <Content Include="Content\adventureGame\car_green.png" />
+    <Content Include="Content\adventureGame\track_endFlag.png" />
+    <Content Include="Content\adventureGame\track_flag.png" />
+    <Content Include="Content\adventureGame\track_road.png" />
+    <Content Include="Content\adventureGame\track_tree.png" />
+    <Content Include="Content\adventureGame\track_wall.png" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\ie.css" />
@@ -223,6 +232,12 @@
     <Content Include="sass\Site.css">
       <DependentUpon>Site.scss</DependentUpon>
     </Content>
+    <Content Include="Scripts\adventureGame\Car.js" />
+    <Content Include="Scripts\adventureGame\GraphicsCommon.js" />
+    <Content Include="Scripts\adventureGame\ImagesLoading.js" />
+    <Content Include="Scripts\adventureGame\Input.js" />
+    <Content Include="Scripts\adventureGame\Main.js" />
+    <Content Include="Scripts\adventureGame\Track.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="sass\_normalize.scss">
@@ -423,6 +438,7 @@
     <Content Include="Views\Shared\_LayoutGameDev.cshtml" />
     <Content Include="Views\Arkanoid\Index.cshtml" />
     <Content Include="Views\Racing\Index.cshtml" />
+    <Content Include="Views\Adventure\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
