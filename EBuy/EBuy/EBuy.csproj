@@ -232,12 +232,12 @@
     <Content Include="sass\Site.css">
       <DependentUpon>Site.scss</DependentUpon>
     </Content>
-    <Content Include="Scripts\adventureGame\Car.js" />
+    <Content Include="Scripts\adventureGame\Warrior.js" />
     <Content Include="Scripts\adventureGame\GraphicsCommon.js" />
     <Content Include="Scripts\adventureGame\ImagesLoading.js" />
     <Content Include="Scripts\adventureGame\Input.js" />
     <Content Include="Scripts\adventureGame\Main.js" />
-    <Content Include="Scripts\adventureGame\Track.js" />
+    <Content Include="Scripts\adventureGame\World.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="sass\_normalize.scss">

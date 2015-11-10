@@ -5,13 +5,13 @@ const REVERSE_POWER         = 0.2;
 const TURN_RATE             = 0.06;
 const MIN_SPEED_TO_TURN     = 0.5;
 
-// car
-function carClass() {
+// warrior
+function warriorClass() {
     this.x     = 75; //canvasWidth / 2;
     this.y     = 75; //canvasHeigth / 2;
     this.speed = 0;
     this.ang   = 0;
-    this.carPic; // which picture to use
+    this.warriorPic; // which picture to use
     this.name = "defaultName";
     
     this.keyHeld_Gas       = false;
@@ -31,27 +31,27 @@ function carClass() {
         this.controlKeyLEFT  = leftKey;
     }
 
-    this.reset = function (carImg, carName) {
-        this.name   = carName;
-        this.carPic = carImg;
-        this.speed  = 0;
+    this.reset = function (warriorImg, warriorName) {
+        this.name       = warriorName;
+        this.warriorPic = warriorImg;
+        this.speed      = 0;
 
-        for (var rowIdx = 0; rowIdx < TRACK_ROWS; rowIdx++) {
-            for (var colIdX = 0; colIdX < TRACK_COLS; colIdX++) {
-                if (trackGrid[rowIdx][colIdX] == TRACK_PLAYER_START) {
-                    trackGrid[rowIdx][colIdX] = TRACK_ROAD;
+        for (var rowIdx = 0; rowIdx < WORLD_ROWS; rowIdx++) {
+            for (var colIdX = 0; colIdX < WORLD_COLS; colIdX++) {
+                if (worldGrid[rowIdx][colIdX] == WORLD_PLAYER_START) {
+                    worldGrid[rowIdx][colIdX] = WORLD_ROAD;
 
                     this.ang = -Math.PI / 2;
 
-                    // car position + center car
-                    this.x = TRACK_W * colIdX + (TRACK_W / 2);
-                    this.y = TRACK_H * rowIdx + (TRACK_H / 2);
+                    // warrior position + center warrior
+                    this.x = WORLD_W * colIdX + (WORLD_W / 2);
+                    this.y = WORLD_H * rowIdx + (WORLD_H / 2);
                     return;
-                } // end of is this car start place
-            } // end of for each locating car start
+                } // end of is this warrior start place
+            } // end of for each locating warrior start
         } // end of row for
         console.log("No PLAYER START FOUND");
-    } // end of carReset func
+    } // end of wariorReset func
     
     this.move = function() {
         // degrade spead - attrition
@@ -74,19 +74,18 @@ function carClass() {
             }
         }
 
-        // car
+        // warrior
         this.x += Math.cos(this.ang) * this.speed;
         this.y += Math.sin(this.ang) * this.speed;
-        //carAng += 0.02;
 
-        carTrackHandling(this);
-    } // end of carMove func
+        warriorWorldHandling(this);
+    } // end of warriorMove func
     
     this.draw = function() {
-        // car
-        //if (carPicLoaded) {
-        drawBitMapCenteredWithRotation(this.carPic, this.x, this.y, this.ang);
+        // warrior
+        //if (warriorPicLoaded) {
+        drawBitMapCenteredWithRotation(this.warriorPic, this.x, this.y, this.ang);
         //}
-    } // end of carDraw func
+    } // end of warriorDraw func
 
-} // end of carClass func
+} // end of warriorClass func

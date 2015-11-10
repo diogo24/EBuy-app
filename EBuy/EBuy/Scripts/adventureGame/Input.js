@@ -15,23 +15,18 @@ const KEY_A = 65;
 
 function setupInput() {
     // add mouse events
-    racingCanvas.mousemove(function (evt) {
+    adventureCanvas.mousemove(function (evt) {
         var mousePos = calculateMousePos(evt);
-        // cheat/hack to test car in any position
-        //carX = mouseX;
-        //carY = mouseY;
-        //carSpeedX = 4;
-        //carSpeedY = -4;
     });
 
     document.addEventListener('keydown', keyPressed);
     document.addEventListener('keyup', keyReleased);
 
-    blueCar.setupInput(KEY_UP_ARROW, KEY_RIGTH_ARROW, KEY_DOWN_ARROW, KEY_LEFT_ARROW);
+    warrior.setupInput(KEY_UP_ARROW, KEY_RIGTH_ARROW, KEY_DOWN_ARROW, KEY_LEFT_ARROW);
 }
 
 function calculateMousePos(evt) {
-    var rect = racingCanvas[0].getBoundingClientRect();
+    var rect = adventureCanvas[0].getBoundingClientRect();
     var root = document.documentElement;
     mouseX = evt.clientX - rect.left - root.scrollLeft;
     mouseY = evt.clientY - rect.top - root.scrollTop;
@@ -42,35 +37,35 @@ function calculateMousePos(evt) {
 }
 
 function keyPressed(evt) {
-    keySet(evt, blueCar, true);
+    keySet(evt, warrior, true);
 }
 
 function keyReleased(evt) {
-    keySet(evt, blueCar, false);
+    keySet(evt, warrior, false);
 }
 
-function keySet(keyEvt, carObject, setTo) {
+function keySet(keyEvt, warriorObject, setTo) {
     //console.log("Key pressed:" + keyEvt.keyCode)
-    if (keyEvt.keyCode == carObject.controlKeyLEFT) {
-        carObject.keyHeld_TurnLeft = setTo;
+    if (keyEvt.keyCode == warriorObject.controlKeyLEFT) {
+        warriorObject.keyHeld_TurnLeft = setTo;
     }
 
-    if (keyEvt.keyCode == carObject.controlKeyRIGTH) {
-        carObject.keyHeld_TurnRight = setTo;
+    if (keyEvt.keyCode == warriorObject.controlKeyRIGTH) {
+        warriorObject.keyHeld_TurnRight = setTo;
     }
 
-    if (keyEvt.keyCode == carObject.controlKeyUP) {
-        carObject.keyHeld_Gas = setTo
+    if (keyEvt.keyCode == warriorObject.controlKeyUP) {
+        warriorObject.keyHeld_Gas = setTo
     }
 
-    if (keyEvt.keyCode == carObject.controlKeyDOWN) {
-        carObject.keyHeld_Reverse = setTo;
+    if (keyEvt.keyCode == warriorObject.controlKeyDOWN) {
+        warriorObject.keyHeld_Reverse = setTo;
     }
 
-    if (keyEvt.keyCode == carObject.controlKeyLEFT
-        || keyEvt.keyCode == carObject.controlKeyRIGTH
-        || keyEvt.keyCode == carObject.controlKeyUP
-        || keyEvt.keyCode == carObject.controlKeyDOWN) {
+    if (keyEvt.keyCode == warriorObject.controlKeyLEFT
+        || keyEvt.keyCode == warriorObject.controlKeyRIGTH
+        || keyEvt.keyCode == warriorObject.controlKeyUP
+        || keyEvt.keyCode == warriorObject.controlKeyDOWN) {
         keyEvt.preventDefault();
     }
 }
