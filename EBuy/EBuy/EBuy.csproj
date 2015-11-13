@@ -438,6 +438,10 @@
     <Content Include="Views\Racing\Index.cshtml" />
     <Content Include="Views\Adventure\Index.cshtml" />
     <Content Include="Views\Cumas\CUSTNO.cshtml" />
+    <Content Include="Views\Cumas\CUTRN.cshtml" />
+    <Content Include="Views\Cumas\CUTRN_All.cshtml" />
+    <Content Include="Views\Cumas\ZTRAN_All.cshtml" />
+    <Content Include="Views\Cumas\ZTRAN.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

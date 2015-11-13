@@ -10,6 +10,8 @@ namespace EBuy.Model
 {
     public class DBFFileReader
     {
+        #region Cumas
+
         public DataTable GetCumasFileData()
         {
             // http://www.connectionstrings.com/dbf-foxpro/
@@ -54,6 +56,44 @@ namespace EBuy.Model
 
             return GetData(mySQL);
         }
+
+        #endregion
+
+        #region CUTRN
+
+        public DataTable GetCUTRN_All()
+        {
+            string mySQL = string.Format("select * from CUTRN");  // dbf table name
+
+            return GetData(mySQL);
+        }
+
+        public DataTable GetCUTRN(string custno)
+        {
+            string mySQL = string.Format("select * from CUTRN  where CUSTNO = '{0}'", custno);  // dbf table name
+
+            return GetData(mySQL);
+        }
+
+        #endregion
+
+        #region ZTRAN
+
+        public DataTable GetZTRAN(string custno)
+        {
+            string mySQL = string.Format("select * from ZTRAN  where CUSTNO = '{0}'", custno);  // dbf table name
+
+            return GetData(mySQL);
+        }
+
+        public DataTable GetZTRAN_All()
+        {
+            string mySQL = string.Format("select * from ZTRAN");  // dbf table name
+
+            return GetData(mySQL);
+        }
+
+        #endregion
 
         private DataTable GetData(string queryString)
         {

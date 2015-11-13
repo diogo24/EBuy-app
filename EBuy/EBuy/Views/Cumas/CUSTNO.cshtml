@@ -3,6 +3,7 @@
 
 @{
     ViewBag.Title = "Index";
+    var custNoObj = new { custno = ViewBag.CUSTNO };
     DataRow row = Model.Rows[0];
 }
 
@@ -18,7 +19,7 @@
     }
 </ul>*@
 
-<table>
+<table class="table">
     <thead>
         <tr>
             <th>Column Name: Column Value</th>
@@ -34,4 +35,14 @@
             </tr>
         }
     </tbody>
+
 </table>
+
+<div>
+    @Html.ActionLink("CUTRN Table", "CUTRN", "Cumas", custNoObj)
+</div>
+
+<div>
+    @Html.ActionLink("ZTRAN Table", "ZTRAN", "Cumas", custNoObj)
+</div>
+
