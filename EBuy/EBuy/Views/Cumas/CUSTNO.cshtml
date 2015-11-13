@@ -1,0 +1,37 @@
+﻿@using System.Data
+@model DataTable
+
+@{
+    ViewBag.Title = "Index";
+    DataRow row = Model.Rows[0];
+}
+
+<h2>Index</h2>
+
+<h3>@Model.TableName</h3>
+
+@*<ul>
+    @foreach (DataColumn item in Model.Columns)
+    {
+        var cell = row[item];
+        <li>@item: @cell</li>
+    }
+</ul>*@
+
+<table>
+    <thead>
+        <tr>
+            <th>Column Name: Column Value</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (DataColumn item in Model.Columns)
+        {
+            var cell = row[item];
+            <tr class="col-sm-4">                
+                <td>@item:</td>
+                <td>@cell</td>
+            </tr>
+        }
+    </tbody>
+</table>

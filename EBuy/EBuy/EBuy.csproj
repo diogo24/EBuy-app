@@ -437,6 +437,7 @@
     <Content Include="Views\Arkanoid\Index.cshtml" />
     <Content Include="Views\Racing\Index.cshtml" />
     <Content Include="Views\Adventure\Index.cshtml" />
+    <Content Include="Views\Cumas\CUSTNO.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

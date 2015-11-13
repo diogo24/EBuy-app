@@ -17,5 +17,13 @@ namespace EBuy.Controllers.Salonman
 
             return View(data);
         }
+
+        public ActionResult CUSTNO(string custno)
+        {
+            var dbfFileReader = new DBFFileReader();
+            var data          = dbfFileReader.GetCUSTNO(custno);
+
+            return View(data);
+        }
     }
 }

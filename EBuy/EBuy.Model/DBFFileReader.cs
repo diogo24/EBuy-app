@@ -47,5 +47,36 @@ namespace EBuy.Model
                 return resultData;
             }
         }
+
+        public DataTable GetCUSTNO(string custno)
+        {
+            string mySQL = string.Format("select * from Cumas where CUSTNO = '{0}'", custno);  // dbf table name
+
+            return GetData(mySQL);
+        }
+
+        private DataTable GetData(string queryString)
+        {
+            DataTable resultData = new DataTable();
+
+            using (OleDbConnection connectionHandler = new OleDbConnection(
+            @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\diogo.marques\Downloads\Newest version\Newest version\Newest version\SALONMAN CURRENT\;Extended Properties=dBASE IV"))
+            {
+                // Open the connection, and if open successfully, you can try to query it
+                connectionHandler.Open();
+
+                if (connectionHandler.State == ConnectionState.Open)
+                {
+                    OleDbCommand MyQuery = new OleDbCommand(queryString, connectionHandler);
+                    OleDbDataAdapter DA  = new OleDbDataAdapter(MyQuery);
+
+                    DA.Fill(resultData);
+
+                    connectionHandler.Close();
+                }
+
+                return resultData;
+            }
+        }
     }
 }
