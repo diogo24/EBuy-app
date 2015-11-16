@@ -5,18 +5,18 @@ const WORLD_COLS = 16;
 const WORLD_ROWS = 12;
 const WORLD_GAP  = 5;
 
-var level1 = [[4, 4, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-                 [4, 4, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-                 [4, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-                 [1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1],
-                 [1, 0, 0, 0, 1, 1, 1, 4, 4, 4, 4, 1, 1, 1, 0, 1],
-                 [1, 0, 0, 1, 1, 0, 0, 1, 4, 4, 1, 1, 0, 0, 0, 1],
-                 [1, 0, 0, 1, 0, 0, 0, 0, 1, 4, 1, 0, 0, 0, 0, 1],
-                 [1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 5, 0, 1],
-                 [1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1],
-                 [1, 2, 0, 1, 0, 0, 5, 0, 0, 0, 5, 0, 0, 1, 0, 1],
-                 [1, 0, 0, 1, 3, 3, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1],
-                 [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+var level1 = [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+              [1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 5, 0, 1, 1, 1, 1],
+              [1, 0, 4, 0, 4, 0, 1, 0, 2, 0, 1, 0, 1, 4, 4, 1],
+              [1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 5, 1, 5, 1, 1],
+              [1, 1, 1, 5, 1, 1, 1, 0, 4, 0, 1, 0, 0, 0, 1, 1],
+              [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 4, 0, 1, 1],
+              [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1],
+              [1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 4, 0, 1, 1],
+              [1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1],
+              [1, 0, 5, 0, 5, 0, 5, 0, 3, 0, 1, 1, 1, 1, 1, 1],
+              [1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1],
+              [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 ];
 
 //var levelList = [level1]; // list of multiple levels
@@ -26,8 +26,8 @@ const WORLD_ROAD         = 0;
 const WORLD_WALL         = 1;
 const WORLD_PLAYER_START = 2;
 const WORLD_GOAL     = 3;
-const WORLD_TREE         = 4;
-const WORLD_FLAG         = 5;
+const WORLD_KEY         = 4;
+const WORLD_DOOR         = 5;
 
 
 function getTileTypeAtPixelCoord(atX, atY) {
@@ -53,7 +53,10 @@ function drawWorlds() {
     var drawTileY = 0;
     for (var rowIdx = 0; rowIdx < WORLD_ROWS; rowIdx++) {
         for (var colIdX = 0; colIdX < WORLD_COLS; colIdX++) {
-            var imgPic = worldPics[worldGrid[rowIdx][colIdX]];                       
+            var imgPic = worldPics[worldGrid[rowIdx][colIdX]];
+            if (tileHasTransparency(worldGrid[rowIdx][colIdX])) {                
+                canvasContext.drawImage(worldPics[WORLD_ROAD], drawTileX, drawTileY);
+            }
             canvasContext.drawImage(imgPic, drawTileX, drawTileY);
 
             drawTileX += WORLD_W;
@@ -63,3 +66,11 @@ function drawWorlds() {
     }
     drawTileY = 0;
 } // end of drawWorlds function
+
+function tileHasTransparency(tileType, atX, atY) {
+    if (tileType == WORLD_KEY || tileType == WORLD_DOOR || tileType == WORLD_GOAL) {
+        return true;
+    }
+
+    return false;
+}

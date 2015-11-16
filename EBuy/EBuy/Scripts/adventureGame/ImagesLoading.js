@@ -26,8 +26,8 @@ function loadImages() {
         { worldType: WORLD_ROAD, fileName: "/Content/adventureGame/world_road.png" },
         { worldType: WORLD_WALL, fileName: "/Content/adventureGame/world_wall.png" },
         { worldType: WORLD_GOAL, fileName: "/Content/adventureGame/world_goal.png" },
-        { worldType: WORLD_TREE, fileName: "/Content/adventureGame/world_tree.png" },
-        { worldType: WORLD_FLAG, fileName: "/Content/adventureGame/world_flag.png" },
+        { worldType: WORLD_KEY, fileName: "/Content/adventureGame/world_tree.png" },
+        { worldType: WORLD_DOOR, fileName: "/Content/adventureGame/world_flag.png" },
     ];
 
     picsToLoad = imageList.length;
