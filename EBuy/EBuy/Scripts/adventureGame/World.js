@@ -29,11 +29,18 @@ const WORLD_GOAL     = 3;
 const WORLD_KEY         = 4;
 const WORLD_DOOR         = 5;
 
+function getWarriorGridColumnIndex(atX) {
+    return Math.floor(atX / WORLD_W);
+}
+
+function getWarriorGridRowIndex(atY) {
+    return Math.floor(atY / WORLD_H);
+}
 
 function getTileTypeAtPixelCoord(atX, atY) {
     // warrior position in the grid
-    var warriorWorldCol = Math.floor(atX / WORLD_W);
-    var warriorWorldRow = Math.floor(atY / WORLD_H);
+    var warriorWorldCol = getWarriorGridColumnIndex(atX);
+    var warriorWorldRow = getWarriorGridRowIndex(atY);
 
     // remove worlds with warrior
     if (warriorWorldCol >= 0

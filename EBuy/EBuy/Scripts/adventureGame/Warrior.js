@@ -8,6 +8,8 @@ function warriorClass() {
     this.name = "defaultName";
     this.walkSpeed = WALK_SPEED;
     
+    this.keysHeld = 0;
+
     this.keyHeld_North = false;
     this.keyHeld_South = false;
     this.keyHeld_West  = false;
@@ -64,13 +66,32 @@ function warriorClass() {
 
         var walkIntoTileIndex = getTileTypeAtPixelCoord(nextX, nextY);
 
-        if (walkIntoTileIndex == WORLD_GOAL) {
-			console.log(this.name + " WINS!");
-			loadLevel(level1);
-        }
-        else if (walkIntoTileIndex == WORLD_ROAD) {
-			this.x = nextX;
-			this.y = nextY;
+        switch (walkIntoTileIndex) {
+            case WORLD_ROAD:
+                this.x = nextX;
+                this.y = nextY;
+                break;
+            case WORLD_GOAL:
+                console.log(this.name + " WINS!");
+                loadLevel(level1);
+                break;
+            case WORLD_DOOR:
+                if (this.keysHeld > 0) {
+                    this.keysHeld--;
+                    $('#keys-count').text(this.keysHeld);
+                    console.log("keys held: " + this.keysHeld);
+                    worldGrid[getWarriorGridRowIndex(nextY)][getWarriorGridColumnIndex(nextX)] = WORLD_ROAD;
+                }
+                break;
+            case WORLD_KEY:
+                this.keysHeld++;
+                $('#keys-count').text(this.keysHeld);
+                console.log("keys held: " + this.keysHeld);
+                worldGrid[getWarriorGridRowIndex(nextY)][getWarriorGridColumnIndex(nextX)] = WORLD_ROAD;
+                break;
+            case WORLD_WALL:                
+            default:
+
         }
     } // end of warriorMove func
     
