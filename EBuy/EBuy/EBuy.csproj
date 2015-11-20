@@ -184,6 +184,7 @@
     <Compile Include="Controllers\GameDev\AdventureController.cs" />
     <Compile Include="Controllers\GameDev\ArkanoidController.cs" />
     <Compile Include="Controllers\GameDev\GameDevController.cs" />
+    <Compile Include="Controllers\GameDev\ManyBallsController.cs" />
     <Compile Include="Controllers\GameDev\RacingController.cs" />
     <Compile Include="Controllers\GameDev\TennisController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -378,6 +379,12 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\manyBallsGame\Ball.js" />
+    <Content Include="Scripts\manyBallsGame\GraphicsCommon.js" />
+    <Content Include="Scripts\manyBallsGame\ImagesLoading.js" />
+    <Content Include="Scripts\manyBallsGame\Input.js" />
+    <Content Include="Scripts\manyBallsGame\Main.js" />
+    <Content Include="Scripts\manyBallsGame\Level.js" />
     <Content Include="Scripts\racingGame\Car.js" />
     <Content Include="Scripts\racingGame\GraphicsCommon.js" />
     <Content Include="Scripts\racingGame\ImagesLoading.js" />
@@ -442,6 +449,7 @@
     <Content Include="Views\Cumas\CUTRN_All.cshtml" />
     <Content Include="Views\Cumas\ZTRAN_All.cshtml" />
     <Content Include="Views\Cumas\ZTRAN.cshtml" />
+    <Content Include="Views\ManyBalls\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

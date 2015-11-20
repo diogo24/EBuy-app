@@ -1,0 +1,16 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout        = "~/Views/Shared/_LayoutGameDev.cshtml";
+}
+
+<canvas id="many-balls-canvas" width="800" height="600"></canvas>
+
+@section Scripts {
+    <script type="text/javascript" src="~/Scripts/manyBallsGame/GraphicsCommon.js"></script>
+    @*<script type="text/javascript" src="~/Scripts/manyBallsGame/ImagesLoading.js"></script>*@
+    <script type="text/javascript" src="~/Scripts/manyBallsGame/Ball.js"></script>
+    @*<script type="text/javascript" src="~/Scripts/manyBallsGame/Input.js"></script>*@
+    <script type="text/javascript" src="~/Scripts/manyBallsGame/Level.js"></script>
+    <script type="text/javascript" src="~/Scripts/manyBallsGame/Main.js"></script>
+}
