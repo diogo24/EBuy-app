@@ -209,13 +209,6 @@
     <Compile Include="Utils\SingleSignOnAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\EBuy.Model\DBTest.mdf">
-      <Link>App_Data\DBTest.mdf</Link>
-    </Content>
-    <Content Include="..\EBuy.Model\DBTest_log.ldf">
-      <Link>App_Data\DBTest_log.ldf</Link>
-      <DependentUpon>DBTest.mdf</DependentUpon>
-    </Content>
     <Content Include="Content\adventureGame\warrior.png" />
     <Content Include="Content\adventureGame\world_flag.png" />
     <Content Include="Content\adventureGame\world_goal.png" />
@@ -469,6 +462,7 @@
     <Content Include="Views\Episodes\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App_Data\" />
     <Folder Include="Views\GameDev\" />
   </ItemGroup>
   <ItemGroup>

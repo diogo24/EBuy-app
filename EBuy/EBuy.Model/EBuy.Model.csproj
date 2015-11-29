@@ -145,8 +145,8 @@
       <LastGenOutput>DBTest.cs</LastGenOutput>
     </Content>
     <Content Include="DBTest_log.ldf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <DependentUpon>DBTest.mdf</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>
