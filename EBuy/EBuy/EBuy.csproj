@@ -26,6 +26,8 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <IsCompassProject>True</IsCompassProject>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -193,6 +195,8 @@
     <Compile Include="Controllers\Learning\PartialViewController.cs" />
     <Compile Include="Controllers\Learning\TestLayoutController.cs" />
     <Compile Include="Controllers\Salonman\CumasController.cs" />
+    <Compile Include="Controllers\ThisWarOfMine\EpisodesController.cs" />
+    <Compile Include="Controllers\ThisWarOfMine\ThisWarOfMineController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -205,6 +209,13 @@
     <Compile Include="Utils\SingleSignOnAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="..\EBuy.Model\DBTest.mdf">
+      <Link>App_Data\DBTest.mdf</Link>
+    </Content>
+    <Content Include="..\EBuy.Model\DBTest_log.ldf">
+      <Link>App_Data\DBTest_log.ldf</Link>
+      <DependentUpon>DBTest.mdf</DependentUpon>
+    </Content>
     <Content Include="Content\adventureGame\warrior.png" />
     <Content Include="Content\adventureGame\world_flag.png" />
     <Content Include="Content\adventureGame\world_goal.png" />
@@ -450,9 +461,14 @@
     <Content Include="Views\Cumas\ZTRAN_All.cshtml" />
     <Content Include="Views\Cumas\ZTRAN.cshtml" />
     <Content Include="Views\ManyBalls\Index.cshtml" />
+    <Content Include="Views\ThisWarOfMine\Index.cshtml" />
+    <Content Include="Views\Episodes\Create.cshtml" />
+    <Content Include="Views\Episodes\Delete.cshtml" />
+    <Content Include="Views\Episodes\Details.cshtml" />
+    <Content Include="Views\Episodes\Edit.cshtml" />
+    <Content Include="Views\Episodes\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Views\GameDev\" />
   </ItemGroup>
   <ItemGroup>
@@ -507,7 +523,9 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props'))" />
     <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
   </Target>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

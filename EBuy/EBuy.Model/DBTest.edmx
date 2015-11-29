@@ -1,0 +1,640 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DBTestModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Episodes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Episode Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="StarDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="ItemComponents">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ItemId" Type="int" Nullable="false" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Items">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="LocationItems">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LocationId" Type="int" Nullable="false" />
+          <Property Name="ItemId" Type="int" Nullable="false" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Locations">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="EpisodeId" Type="int" Nullable="false" />
+          <Property Name="Percentage" Type="int" />
+          <Property Name="Items Description" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="OurThings">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EpisodeId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OurThingsItems">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OurthingsId" Type="int" Nullable="false" />
+          <Property Name="ItemId" Type="int" Nullable="false" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Workshop">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="EpisodeId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="WorkshopItems">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="WorkshopId" Type="int" Nullable="false" />
+          <Property Name="ItemId" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_ItemComponents_Items">
+          <End Role="Items" Type="Self.Items" Multiplicity="1" />
+          <End Role="ItemComponents" Type="Self.ItemComponents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Items">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ItemComponents">
+              <PropertyRef Name="ItemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LocationItems_Items">
+          <End Role="Items" Type="Self.Items" Multiplicity="1" />
+          <End Role="LocationItems" Type="Self.LocationItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Items">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LocationItems">
+              <PropertyRef Name="ItemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LocationItems_Locations">
+          <End Role="Locations" Type="Self.Locations" Multiplicity="1" />
+          <End Role="LocationItems" Type="Self.LocationItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Locations">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LocationItems">
+              <PropertyRef Name="LocationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Locations_Episodes">
+          <End Role="Episodes" Type="Self.Episodes" Multiplicity="1" />
+          <End Role="Locations" Type="Self.Locations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Episodes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Locations">
+              <PropertyRef Name="EpisodeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OurThings_Episodes">
+          <End Role="Episodes" Type="Self.Episodes" Multiplicity="1" />
+          <End Role="OurThings" Type="Self.OurThings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Episodes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OurThings">
+              <PropertyRef Name="EpisodeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OurThingsItems_Items">
+          <End Role="Items" Type="Self.Items" Multiplicity="1" />
+          <End Role="OurThingsItems" Type="Self.OurThingsItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Items">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OurThingsItems">
+              <PropertyRef Name="ItemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OurThingsItems_OurThings">
+          <End Role="OurThings" Type="Self.OurThings" Multiplicity="1" />
+          <End Role="OurThingsItems" Type="Self.OurThingsItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OurThings">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OurThingsItems">
+              <PropertyRef Name="OurthingsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Workshop_Episodes">
+          <End Role="Episodes" Type="Self.Episodes" Multiplicity="1" />
+          <End Role="Workshop" Type="Self.Workshop" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Episodes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Workshop">
+              <PropertyRef Name="EpisodeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WorkshopItems_Items">
+          <End Role="Items" Type="Self.Items" Multiplicity="1" />
+          <End Role="WorkshopItems" Type="Self.WorkshopItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Items">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="WorkshopItems">
+              <PropertyRef Name="ItemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WorkshopItems_Workshop">
+          <End Role="Workshop" Type="Self.Workshop" Multiplicity="1" />
+          <End Role="WorkshopItems" Type="Self.WorkshopItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Workshop">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="WorkshopItems">
+              <PropertyRef Name="WorkshopId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DBTestModelStoreContainer">
+          <EntitySet Name="Episodes" EntityType="Self.Episodes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ItemComponents" EntityType="Self.ItemComponents" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Items" EntityType="Self.Items" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LocationItems" EntityType="Self.LocationItems" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Locations" EntityType="Self.Locations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OurThings" EntityType="Self.OurThings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OurThingsItems" EntityType="Self.OurThingsItems" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Workshop" EntityType="Self.Workshop" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WorkshopItems" EntityType="Self.WorkshopItems" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_ItemComponents_Items" Association="Self.FK_ItemComponents_Items">
+            <End Role="Items" EntitySet="Items" />
+            <End Role="ItemComponents" EntitySet="ItemComponents" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LocationItems_Items" Association="Self.FK_LocationItems_Items">
+            <End Role="Items" EntitySet="Items" />
+            <End Role="LocationItems" EntitySet="LocationItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LocationItems_Locations" Association="Self.FK_LocationItems_Locations">
+            <End Role="Locations" EntitySet="Locations" />
+            <End Role="LocationItems" EntitySet="LocationItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Locations_Episodes" Association="Self.FK_Locations_Episodes">
+            <End Role="Episodes" EntitySet="Episodes" />
+            <End Role="Locations" EntitySet="Locations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OurThings_Episodes" Association="Self.FK_OurThings_Episodes">
+            <End Role="Episodes" EntitySet="Episodes" />
+            <End Role="OurThings" EntitySet="OurThings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OurThingsItems_Items" Association="Self.FK_OurThingsItems_Items">
+            <End Role="Items" EntitySet="Items" />
+            <End Role="OurThingsItems" EntitySet="OurThingsItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OurThingsItems_OurThings" Association="Self.FK_OurThingsItems_OurThings">
+            <End Role="OurThings" EntitySet="OurThings" />
+            <End Role="OurThingsItems" EntitySet="OurThingsItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Workshop_Episodes" Association="Self.FK_Workshop_Episodes">
+            <End Role="Episodes" EntitySet="Episodes" />
+            <End Role="Workshop" EntitySet="Workshop" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WorkshopItems_Items" Association="Self.FK_WorkshopItems_Items">
+            <End Role="Items" EntitySet="Items" />
+            <End Role="WorkshopItems" EntitySet="WorkshopItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WorkshopItems_Workshop" Association="Self.FK_WorkshopItems_Workshop">
+            <End Role="Workshop" EntitySet="Workshop" />
+            <End Role="WorkshopItems" EntitySet="WorkshopItems" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DBTestModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="DBTestEntities" annotation:LazyLoadingEnabled="true" >
+          <EntitySet Name="Episodes" EntityType="DBTestModel.Episodes" />
+          <EntitySet Name="ItemComponents" EntityType="DBTestModel.ItemComponents" />
+          <EntitySet Name="Items" EntityType="DBTestModel.Items" />
+          <EntitySet Name="LocationItems" EntityType="DBTestModel.LocationItems" />
+          <EntitySet Name="Locations" EntityType="DBTestModel.Locations" />
+          <EntitySet Name="OurThings" EntityType="DBTestModel.OurThings" />
+          <EntitySet Name="OurThingsItems" EntityType="DBTestModel.OurThingsItems" />
+          <EntitySet Name="Workshop" EntityType="DBTestModel.Workshop" />
+          <EntitySet Name="WorkshopItems" EntityType="DBTestModel.WorkshopItems" />
+          <AssociationSet Name="FK_Locations_Episodes" Association="DBTestModel.FK_Locations_Episodes">
+            <End Role="Episodes" EntitySet="Episodes" />
+            <End Role="Locations" EntitySet="Locations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OurThings_Episodes" Association="DBTestModel.FK_OurThings_Episodes">
+            <End Role="Episodes" EntitySet="Episodes" />
+            <End Role="OurThings" EntitySet="OurThings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Workshop_Episodes" Association="DBTestModel.FK_Workshop_Episodes">
+            <End Role="Episodes" EntitySet="Episodes" />
+            <End Role="Workshop" EntitySet="Workshop" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemComponents_Items" Association="DBTestModel.FK_ItemComponents_Items">
+            <End Role="Items" EntitySet="Items" />
+            <End Role="ItemComponents" EntitySet="ItemComponents" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LocationItems_Items" Association="DBTestModel.FK_LocationItems_Items">
+            <End Role="Items" EntitySet="Items" />
+            <End Role="LocationItems" EntitySet="LocationItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OurThingsItems_Items" Association="DBTestModel.FK_OurThingsItems_Items">
+            <End Role="Items" EntitySet="Items" />
+            <End Role="OurThingsItems" EntitySet="OurThingsItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WorkshopItems_Items" Association="DBTestModel.FK_WorkshopItems_Items">
+            <End Role="Items" EntitySet="Items" />
+            <End Role="WorkshopItems" EntitySet="WorkshopItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LocationItems_Locations" Association="DBTestModel.FK_LocationItems_Locations">
+            <End Role="Locations" EntitySet="Locations" />
+            <End Role="LocationItems" EntitySet="LocationItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OurThingsItems_OurThings" Association="DBTestModel.FK_OurThingsItems_OurThings">
+            <End Role="OurThings" EntitySet="OurThings" />
+            <End Role="OurThingsItems" EntitySet="OurThingsItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WorkshopItems_Workshop" Association="DBTestModel.FK_WorkshopItems_Workshop">
+            <End Role="Workshop" EntitySet="Workshop" />
+            <End Role="WorkshopItems" EntitySet="WorkshopItems" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Episodes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Episode_Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="StarDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Locations" Relationship="DBTestModel.FK_Locations_Episodes" FromRole="Episodes" ToRole="Locations" />
+          <NavigationProperty Name="OurThings" Relationship="DBTestModel.FK_OurThings_Episodes" FromRole="Episodes" ToRole="OurThings" />
+          <NavigationProperty Name="Workshop" Relationship="DBTestModel.FK_Workshop_Episodes" FromRole="Episodes" ToRole="Workshop" />
+        </EntityType>
+        <EntityType Name="ItemComponents">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ItemId" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Items" Relationship="DBTestModel.FK_ItemComponents_Items" FromRole="ItemComponents" ToRole="Items" />
+        </EntityType>
+        <EntityType Name="Items">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ItemComponents" Relationship="DBTestModel.FK_ItemComponents_Items" FromRole="Items" ToRole="ItemComponents" />
+          <NavigationProperty Name="LocationItems" Relationship="DBTestModel.FK_LocationItems_Items" FromRole="Items" ToRole="LocationItems" />
+          <NavigationProperty Name="OurThingsItems" Relationship="DBTestModel.FK_OurThingsItems_Items" FromRole="Items" ToRole="OurThingsItems" />
+          <NavigationProperty Name="WorkshopItems" Relationship="DBTestModel.FK_WorkshopItems_Items" FromRole="Items" ToRole="WorkshopItems" />
+        </EntityType>
+        <EntityType Name="LocationItems">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LocationId" Type="Int32" Nullable="false" />
+          <Property Name="ItemId" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Items" Relationship="DBTestModel.FK_LocationItems_Items" FromRole="LocationItems" ToRole="Items" />
+          <NavigationProperty Name="Locations" Relationship="DBTestModel.FK_LocationItems_Locations" FromRole="LocationItems" ToRole="Locations" />
+        </EntityType>
+        <EntityType Name="Locations">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="EpisodeId" Type="Int32" Nullable="false" />
+          <Property Name="Percentage" Type="Int32" />
+          <Property Name="Items_Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Episodes" Relationship="DBTestModel.FK_Locations_Episodes" FromRole="Locations" ToRole="Episodes" />
+          <NavigationProperty Name="LocationItems" Relationship="DBTestModel.FK_LocationItems_Locations" FromRole="Locations" ToRole="LocationItems" />
+        </EntityType>
+        <EntityType Name="OurThings">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EpisodeId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Episodes" Relationship="DBTestModel.FK_OurThings_Episodes" FromRole="OurThings" ToRole="Episodes" />
+          <NavigationProperty Name="OurThingsItems" Relationship="DBTestModel.FK_OurThingsItems_OurThings" FromRole="OurThings" ToRole="OurThingsItems" />
+        </EntityType>
+        <EntityType Name="OurThingsItems">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OurthingsId" Type="Int32" Nullable="false" />
+          <Property Name="ItemId" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Items" Relationship="DBTestModel.FK_OurThingsItems_Items" FromRole="OurThingsItems" ToRole="Items" />
+          <NavigationProperty Name="OurThings" Relationship="DBTestModel.FK_OurThingsItems_OurThings" FromRole="OurThingsItems" ToRole="OurThings" />
+        </EntityType>
+        <EntityType Name="Workshop">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EpisodeId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Episodes" Relationship="DBTestModel.FK_Workshop_Episodes" FromRole="Workshop" ToRole="Episodes" />
+          <NavigationProperty Name="WorkshopItems" Relationship="DBTestModel.FK_WorkshopItems_Workshop" FromRole="Workshop" ToRole="WorkshopItems" />
+        </EntityType>
+        <EntityType Name="WorkshopItems">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="WorkshopId" Type="Int32" Nullable="false" />
+          <Property Name="ItemId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Items" Relationship="DBTestModel.FK_WorkshopItems_Items" FromRole="WorkshopItems" ToRole="Items" />
+          <NavigationProperty Name="Workshop" Relationship="DBTestModel.FK_WorkshopItems_Workshop" FromRole="WorkshopItems" ToRole="Workshop" />
+        </EntityType>
+        <Association Name="FK_Locations_Episodes">
+          <End Type="DBTestModel.Episodes" Role="Episodes" Multiplicity="1" />
+          <End Type="DBTestModel.Locations" Role="Locations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Episodes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Locations">
+              <PropertyRef Name="EpisodeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OurThings_Episodes">
+          <End Type="DBTestModel.Episodes" Role="Episodes" Multiplicity="1" />
+          <End Type="DBTestModel.OurThings" Role="OurThings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Episodes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OurThings">
+              <PropertyRef Name="EpisodeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Workshop_Episodes">
+          <End Type="DBTestModel.Episodes" Role="Episodes" Multiplicity="1" />
+          <End Type="DBTestModel.Workshop" Role="Workshop" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Episodes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Workshop">
+              <PropertyRef Name="EpisodeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemComponents_Items">
+          <End Type="DBTestModel.Items" Role="Items" Multiplicity="1" />
+          <End Type="DBTestModel.ItemComponents" Role="ItemComponents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Items">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ItemComponents">
+              <PropertyRef Name="ItemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LocationItems_Items">
+          <End Type="DBTestModel.Items" Role="Items" Multiplicity="1" />
+          <End Type="DBTestModel.LocationItems" Role="LocationItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Items">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LocationItems">
+              <PropertyRef Name="ItemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OurThingsItems_Items">
+          <End Type="DBTestModel.Items" Role="Items" Multiplicity="1" />
+          <End Type="DBTestModel.OurThingsItems" Role="OurThingsItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Items">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OurThingsItems">
+              <PropertyRef Name="ItemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WorkshopItems_Items">
+          <End Type="DBTestModel.Items" Role="Items" Multiplicity="1" />
+          <End Type="DBTestModel.WorkshopItems" Role="WorkshopItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Items">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="WorkshopItems">
+              <PropertyRef Name="ItemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LocationItems_Locations">
+          <End Type="DBTestModel.Locations" Role="Locations" Multiplicity="1" />
+          <End Type="DBTestModel.LocationItems" Role="LocationItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Locations">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LocationItems">
+              <PropertyRef Name="LocationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OurThingsItems_OurThings">
+          <End Type="DBTestModel.OurThings" Role="OurThings" Multiplicity="1" />
+          <End Type="DBTestModel.OurThingsItems" Role="OurThingsItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OurThings">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OurThingsItems">
+              <PropertyRef Name="OurthingsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WorkshopItems_Workshop">
+          <End Type="DBTestModel.Workshop" Role="Workshop" Multiplicity="1" />
+          <End Type="DBTestModel.WorkshopItems" Role="WorkshopItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Workshop">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="WorkshopItems">
+              <PropertyRef Name="WorkshopId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DBTestModelStoreContainer" CdmEntityContainer="DBTestEntities" >
+          <EntitySetMapping Name="Episodes">
+            <EntityTypeMapping TypeName="DBTestModel.Episodes">
+              <MappingFragment StoreEntitySet="Episodes">
+                <ScalarProperty Name="StarDate" ColumnName="StarDate" />
+                <ScalarProperty Name="Episode_Name" ColumnName="Episode Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ItemComponents">
+            <EntityTypeMapping TypeName="DBTestModel.ItemComponents">
+              <MappingFragment StoreEntitySet="ItemComponents">
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Items">
+            <EntityTypeMapping TypeName="DBTestModel.Items">
+              <MappingFragment StoreEntitySet="Items">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LocationItems">
+            <EntityTypeMapping TypeName="DBTestModel.LocationItems">
+              <MappingFragment StoreEntitySet="LocationItems">
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+                <ScalarProperty Name="LocationId" ColumnName="LocationId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Locations">
+            <EntityTypeMapping TypeName="DBTestModel.Locations">
+              <MappingFragment StoreEntitySet="Locations">
+                <ScalarProperty Name="Items_Description" ColumnName="Items Description" />
+                <ScalarProperty Name="Percentage" ColumnName="Percentage" />
+                <ScalarProperty Name="EpisodeId" ColumnName="EpisodeId" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OurThings">
+            <EntityTypeMapping TypeName="DBTestModel.OurThings">
+              <MappingFragment StoreEntitySet="OurThings">
+                <ScalarProperty Name="EpisodeId" ColumnName="EpisodeId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OurThingsItems">
+            <EntityTypeMapping TypeName="DBTestModel.OurThingsItems">
+              <MappingFragment StoreEntitySet="OurThingsItems">
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+                <ScalarProperty Name="OurthingsId" ColumnName="OurthingsId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Workshop">
+            <EntityTypeMapping TypeName="DBTestModel.Workshop">
+              <MappingFragment StoreEntitySet="Workshop">
+                <ScalarProperty Name="EpisodeId" ColumnName="EpisodeId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WorkshopItems">
+            <EntityTypeMapping TypeName="DBTestModel.WorkshopItems">
+              <MappingFragment StoreEntitySet="WorkshopItems">
+                <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+                <ScalarProperty Name="WorkshopId" ColumnName="WorkshopId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
