@@ -197,6 +197,7 @@
     <Compile Include="Controllers\Learning\TestLayoutController.cs" />
     <Compile Include="Controllers\Salonman\CumasController.cs" />
     <Compile Include="Controllers\ThisWarOfMine\EpisodesController.cs" />
+    <Compile Include="Controllers\ThisWarOfMine\ItemComponentsController.cs" />
     <Compile Include="Controllers\ThisWarOfMine\ItemsController.cs" />
     <Compile Include="Controllers\ThisWarOfMine\OurThingsController.cs" />
     <Compile Include="Controllers\ThisWarOfMine\OurThingsItemsController.cs" />
@@ -498,6 +499,11 @@
     <Content Include="Views\Items\Details.cshtml" />
     <Content Include="Views\Items\Edit.cshtml" />
     <Content Include="Views\Items\Index.cshtml" />
+    <Content Include="Views\ItemComponents\Create.cshtml" />
+    <Content Include="Views\ItemComponents\Delete.cshtml" />
+    <Content Include="Views\ItemComponents\Details.cshtml" />
+    <Content Include="Views\ItemComponents\Edit.cshtml" />
+    <Content Include="Views\ItemComponents\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\GameDev\" />
