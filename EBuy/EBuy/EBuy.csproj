@@ -197,6 +197,7 @@
     <Compile Include="Controllers\Learning\TestLayoutController.cs" />
     <Compile Include="Controllers\Salonman\CumasController.cs" />
     <Compile Include="Controllers\ThisWarOfMine\EpisodesController.cs" />
+    <Compile Include="Controllers\ThisWarOfMine\OurThingsController.cs" />
     <Compile Include="Controllers\ThisWarOfMine\ThisWarOfMineController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -480,6 +481,11 @@
     <Content Include="Views\Episodes\Details.cshtml" />
     <Content Include="Views\Episodes\Edit.cshtml" />
     <Content Include="Views\Episodes\Index.cshtml" />
+    <Content Include="Views\OurThings\Create.cshtml" />
+    <Content Include="Views\OurThings\Delete.cshtml" />
+    <Content Include="Views\OurThings\Details.cshtml" />
+    <Content Include="Views\OurThings\Edit.cshtml" />
+    <Content Include="Views\OurThings\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\GameDev\" />
