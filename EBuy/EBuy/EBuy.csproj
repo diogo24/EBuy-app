@@ -198,6 +198,7 @@
     <Compile Include="Controllers\Salonman\CumasController.cs" />
     <Compile Include="Controllers\ThisWarOfMine\EpisodesController.cs" />
     <Compile Include="Controllers\ThisWarOfMine\OurThingsController.cs" />
+    <Compile Include="Controllers\ThisWarOfMine\OurThingsItemsController.cs" />
     <Compile Include="Controllers\ThisWarOfMine\ThisWarOfMineController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -486,6 +487,11 @@
     <Content Include="Views\OurThings\Details.cshtml" />
     <Content Include="Views\OurThings\Edit.cshtml" />
     <Content Include="Views\OurThings\Index.cshtml" />
+    <Content Include="Views\OurThingsItems\Create.cshtml" />
+    <Content Include="Views\OurThingsItems\Delete.cshtml" />
+    <Content Include="Views\OurThingsItems\Details.cshtml" />
+    <Content Include="Views\OurThingsItems\Edit.cshtml" />
+    <Content Include="Views\OurThingsItems\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\GameDev\" />
