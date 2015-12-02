@@ -24,7 +24,7 @@ namespace EBuy.Controllers
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
         {
-            UserManager = userManager;
+            UserManager   = userManager;
             SignInManager = signInManager;
         }
 
