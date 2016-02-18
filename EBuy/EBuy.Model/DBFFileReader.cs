@@ -10,6 +10,8 @@ namespace EBuy.Model
 {
     public class DBFFileReader
     {
+        private int NumberResultByPage = 10;
+
         #region Cumas
 
         public DataTable GetCumasFileData()
@@ -48,6 +50,36 @@ namespace EBuy.Model
 
                 return resultData;
             }
+        }
+
+        public DataTable GetCumasByPage(int page)
+        {
+            if(page <= 0)
+            {
+                return new DataTable();
+            }
+
+            var startIndex = ((page - 1) * NumberResultByPage) + 1; // make sure when page 1 we start with index 1, ...
+            var endIndex   = startIndex + NumberResultByPage; // make sure we return the correct number of results
+
+            string mySQL = "select * from Cumas";  // dbf table name
+            var dataTable = GetData(mySQL);
+
+            var dt = new DataTable();
+            DataColumn[] dca = new DataColumn[dataTable.Columns.Count];
+            dataTable.Columns.CopyTo(dca, 0);
+            dt.Columns.AddRange(dca);
+
+            var count = dataTable.Rows.Count;
+            for (; startIndex < endIndex; startIndex++)
+            {
+                if(count > startIndex)
+                {
+                    dt.Rows.Add(dataTable.Rows[startIndex]);
+                }                
+            }
+
+            return dt;
         }
 
         public DataTable GetCUSTNO(string custno)

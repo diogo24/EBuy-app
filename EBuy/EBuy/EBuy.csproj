@@ -504,6 +504,7 @@
     <Content Include="Views\ItemComponents\Details.cshtml" />
     <Content Include="Views\ItemComponents\Edit.cshtml" />
     <Content Include="Views\ItemComponents\Index.cshtml" />
+    <Content Include="Views\Cumas\CumasByPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\GameDev\" />

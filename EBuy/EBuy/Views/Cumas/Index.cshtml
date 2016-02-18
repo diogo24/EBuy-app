@@ -2,36 +2,49 @@
 @model DataTable
 
 @{
-    ViewBag.Title = "Index";
-    
+    ViewBag.Title          = "Index";
+    var NumberResultByPage = 10;
+    var nrPages            = DivideRoundingUp(Model.Rows.Count, NumberResultByPage);
 }
 
 <h2>Index</h2>
 
 <h3>@Model.TableName</h3>
 
-<table class="table">
-    <thead>
-        <tr>
-            @foreach (var item in Model.Columns)
-            {
-                <th>@item</th>
-            }
-        </tr>
-    </thead>
-    <tbody>
-        @for (int i = 0; i < Model.Rows.Count && i < 10; i++)
-        {
+<div id="cumas-table-div-container">
+    <table class="table table-bordered">
+        <thead>
             <tr>
-                <td>@Html.ActionLink("Customer Details", "CUSTNO", "Cumas", new { custno = Model.Rows[i].ItemArray[1] }, null)</td>
-                @foreach (var item in Model.Rows[i].ItemArray)
-                {
-                    <td>@item</td>
+                <th></th>
+                @foreach (var item in Model.Columns)
+            {
+                    <th>@item</th>
                 }
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.Rows.Count && i < 10; i++)
+            {
+                <tr>
+                    <td>@Html.ActionLink("Customer Details", "CUSTNO", "Cumas", new { custno = Model.Rows[i].ItemArray[1] }, null)</td>
+                    @foreach (var item in Model.Rows[i].ItemArray)
+                {
+                        <td>@item</td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<nav id="pagination">
+    <ul class="pager">
+        <li class="previous disabled"><a href="#">Previous</a></li>
+        <li>Page</li>
+        <li class="page-number">1</li>
+        <li>of @nrPages </li>
+        <li class="next"><a href="#">Next</a></li>
+    </ul>
+</nav>
 
 <table class="table">
     <tbody>       
@@ -92,3 +105,68 @@
             }
     </tbody>
 </table>
+
+@functions {
+    public static int DivideRoundingUp(int x, int y)
+    {
+        // TODO: Define behaviour for negative numbers
+        int remainder;
+        int quotient = Math.DivRem(x, y, out remainder);
+        return remainder == 0 ? quotient : quotient + 1;
+    }
+}
+
+@section Scripts {
+<script type="text/javascript">
+    $(function () {
+        var page      = 1;
+        var nrOfPages = @nrPages;
+
+        $('#pagination .previous').click(function (evt) {
+            evt.preventDefault();
+            if ($(evt.currentTarget).hasClass("disabled")) { return; }
+
+            page--;
+            PaginationDisable();
+
+            LoadPage();
+        });
+
+        $('#pagination .next').click(function (evt) {
+            evt.preventDefault();
+            if ($(evt.currentTarget).hasClass("disabled")) { return; }
+
+            page++;
+            PaginationDisable();
+
+            LoadPage();
+        });
+
+        function PaginationDisable() {
+            $('#pagination .page-number').text(page);
+
+            if(page == 1){
+                $('#pagination .previous').addClass("disabled");
+            } else {
+                $('#pagination .previous').removeClass("disabled");
+            }
+
+            if(page == nrOfPages) {
+                $('#pagination .next').addClass("disabled");
+            }
+            else {
+                $('#pagination .next').removeClass("disabled");
+            }
+        }
+
+        function LoadPage(){
+            $.ajax({
+                url: '@Url.Action("GetCummasByPage", "Cumas")?page=' + page,
+                success: function (result) {
+                    $('#cumas-table-div-container').html(result);
+                }
+            });
+        }
+    });
+</script>
+}
