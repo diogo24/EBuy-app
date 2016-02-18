@@ -12,25 +12,24 @@ namespace EBuy.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class Episodes
+    public partial class EpisodeLocations
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Episodes()
+        public EpisodeLocations()
         {
-            this.EpisodeLocations = new HashSet<EpisodeLocations>();
-            this.OurThings = new HashSet<OurThings>();
-            this.Workshop = new HashSet<Workshop>();
+            this.LocationItems = new HashSet<LocationItems>();
         }
     
         public int Id { get; set; }
-        public string Episode_Name { get; set; }
-        public Nullable<System.DateTime> StarDate { get; set; }
+        public int LocationID { get; set; }
+        public string Description { get; set; }
+        public int EpisodeId { get; set; }
+        public Nullable<int> Percentage { get; set; }
+        public string Items_Description { get; set; }
     
+        public virtual Locations Locations { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<EpisodeLocations> EpisodeLocations { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<OurThings> OurThings { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Workshop> Workshop { get; set; }
+        public virtual ICollection<LocationItems> LocationItems { get; set; }
+        public virtual Episodes Episodes { get; set; }
     }
 }

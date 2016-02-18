@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\diogo\Documents\GitHub\EBuy-app\EBuy\EBuy.Model\DBTest.edmx'. 
+﻿// T4 code generation is enabled for model 'D:\Downloads\VS2015Dev\GitHubVisualStudio\EBuy\EBuy\EBuy.Model\DBTest.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

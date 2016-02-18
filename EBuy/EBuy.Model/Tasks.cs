@@ -12,14 +12,18 @@ namespace EBuy.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class LocationItems
+    public partial class Tasks
     {
         public int Id { get; set; }
-        public int LocationId { get; set; }
-        public int ItemId { get; set; }
-        public int Quantity { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public Nullable<System.DateTime> StartDate { get; set; }
+        public Nullable<System.DateTime> EndDate { get; set; }
+        public System.DateTime CreateDate { get; set; }
+        public System.DateTime UpdatedDate { get; set; }
+        public Nullable<System.DateTime> DoneDate { get; set; }
+        public string StatusCode { get; set; }
     
-        public virtual EpisodeLocations EpisodeLocations { get; set; }
-        public virtual Items Items { get; set; }
+        public virtual TaskStatuses TaskStatuses { get; set; }
     }
 }

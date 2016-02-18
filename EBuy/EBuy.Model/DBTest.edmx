@@ -5,6 +5,17 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="DBTestModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="EpisodeLocations">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LocationID" Type="int" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="EpisodeId" Type="int" Nullable="false" />
+          <Property Name="Percentage" Type="int" />
+          <Property Name="Items Description" Type="nvarchar(max)" />
+        </EntityType>
         <EntityType Name="Episodes">
           <Key>
             <PropertyRef Name="Id" />
@@ -44,10 +55,6 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Description" Type="nvarchar(max)" />
-          <Property Name="EpisodeId" Type="int" Nullable="false" />
-          <Property Name="Percentage" Type="int" />
-          <Property Name="Items Description" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="OurThings">
           <Key>
@@ -65,6 +72,27 @@
           <Property Name="ItemId" Type="int" Nullable="false" />
           <Property Name="Quantity" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="Tasks">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="StartDate" Type="datetime" />
+          <Property Name="EndDate" Type="datetime" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedDate" Type="datetime" Nullable="false" />
+          <Property Name="DoneDate" Type="datetime" />
+          <Property Name="StatusCode" Type="nchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TaskStatuses">
+          <Key>
+            <PropertyRef Name="Code" />
+          </Key>
+          <Property Name="Code" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" />
+        </EntityType>
         <EntityType Name="Workshop">
           <Key>
             <PropertyRef Name="Id" />
@@ -81,6 +109,18 @@
           <Property Name="WorkshopId" Type="int" Nullable="false" />
           <Property Name="ItemId" Type="int" Nullable="false" />
         </EntityType>
+        <Association Name="FK_EpisodeLocations_Locations">
+          <End Role="Locations" Type="Self.Locations" Multiplicity="1" />
+          <End Role="EpisodeLocations" Type="Self.EpisodeLocations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Locations">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EpisodeLocations">
+              <PropertyRef Name="LocationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ItemComponents_Items">
           <End Role="Items" Type="Self.Items" Multiplicity="1" />
           <End Role="ItemComponents" Type="Self.ItemComponents" Multiplicity="*" />
@@ -106,10 +146,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_LocationItems_Locations">
-          <End Role="Locations" Type="Self.Locations" Multiplicity="1" />
+          <End Role="EpisodeLocations" Type="Self.EpisodeLocations" Multiplicity="1" />
           <End Role="LocationItems" Type="Self.LocationItems" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Locations">
+            <Principal Role="EpisodeLocations">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="LocationItems">
@@ -119,12 +159,12 @@
         </Association>
         <Association Name="FK_Locations_Episodes">
           <End Role="Episodes" Type="Self.Episodes" Multiplicity="1" />
-          <End Role="Locations" Type="Self.Locations" Multiplicity="*" />
+          <End Role="EpisodeLocations" Type="Self.EpisodeLocations" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Episodes">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Locations">
+            <Dependent Role="EpisodeLocations">
               <PropertyRef Name="EpisodeId" />
             </Dependent>
           </ReferentialConstraint>
@@ -165,6 +205,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Tasks_TaskStatuses">
+          <End Role="TaskStatuses" Type="Self.TaskStatuses" Multiplicity="1" />
+          <End Role="Tasks" Type="Self.Tasks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaskStatuses">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="Tasks">
+              <PropertyRef Name="StatusCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Workshop_Episodes">
           <End Role="Episodes" Type="Self.Episodes" Multiplicity="1" />
           <End Role="Workshop" Type="Self.Workshop" Multiplicity="*" />
@@ -202,6 +254,7 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="DBTestModelStoreContainer">
+          <EntitySet Name="EpisodeLocations" EntityType="Self.EpisodeLocations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Episodes" EntityType="Self.Episodes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ItemComponents" EntityType="Self.ItemComponents" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Items" EntityType="Self.Items" Schema="dbo" store:Type="Tables" />
@@ -209,8 +262,14 @@
           <EntitySet Name="Locations" EntityType="Self.Locations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OurThings" EntityType="Self.OurThings" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OurThingsItems" EntityType="Self.OurThingsItems" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tasks" EntityType="Self.Tasks" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TaskStatuses" EntityType="Self.TaskStatuses" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Workshop" EntityType="Self.Workshop" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WorkshopItems" EntityType="Self.WorkshopItems" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_EpisodeLocations_Locations" Association="Self.FK_EpisodeLocations_Locations">
+            <End Role="Locations" EntitySet="Locations" />
+            <End Role="EpisodeLocations" EntitySet="EpisodeLocations" />
+          </AssociationSet>
           <AssociationSet Name="FK_ItemComponents_Items" Association="Self.FK_ItemComponents_Items">
             <End Role="Items" EntitySet="Items" />
             <End Role="ItemComponents" EntitySet="ItemComponents" />
@@ -220,12 +279,12 @@
             <End Role="LocationItems" EntitySet="LocationItems" />
           </AssociationSet>
           <AssociationSet Name="FK_LocationItems_Locations" Association="Self.FK_LocationItems_Locations">
-            <End Role="Locations" EntitySet="Locations" />
+            <End Role="EpisodeLocations" EntitySet="EpisodeLocations" />
             <End Role="LocationItems" EntitySet="LocationItems" />
           </AssociationSet>
           <AssociationSet Name="FK_Locations_Episodes" Association="Self.FK_Locations_Episodes">
             <End Role="Episodes" EntitySet="Episodes" />
-            <End Role="Locations" EntitySet="Locations" />
+            <End Role="EpisodeLocations" EntitySet="EpisodeLocations" />
           </AssociationSet>
           <AssociationSet Name="FK_OurThings_Episodes" Association="Self.FK_OurThings_Episodes">
             <End Role="Episodes" EntitySet="Episodes" />
@@ -238,6 +297,10 @@
           <AssociationSet Name="FK_OurThingsItems_OurThings" Association="Self.FK_OurThingsItems_OurThings">
             <End Role="OurThings" EntitySet="OurThings" />
             <End Role="OurThingsItems" EntitySet="OurThingsItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tasks_TaskStatuses" Association="Self.FK_Tasks_TaskStatuses">
+            <End Role="TaskStatuses" EntitySet="TaskStatuses" />
+            <End Role="Tasks" EntitySet="Tasks" />
           </AssociationSet>
           <AssociationSet Name="FK_Workshop_Episodes" Association="Self.FK_Workshop_Episodes">
             <End Role="Episodes" EntitySet="Episodes" />
@@ -257,6 +320,13 @@
     <edmx:ConceptualModels>
       <Schema Namespace="DBTestModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="DBTestEntities" annotation:LazyLoadingEnabled="true" >
+          <EntitySet Name="Tasks" EntityType="DBTestModel.Tasks" />
+          <EntitySet Name="TaskStatuses" EntityType="DBTestModel.TaskStatuses" />
+          <AssociationSet Name="FK_Tasks_TaskStatuses" Association="DBTestModel.FK_Tasks_TaskStatuses">
+            <End Role="TaskStatuses" EntitySet="TaskStatuses" />
+            <End Role="Tasks" EntitySet="Tasks" />
+          </AssociationSet>
+          <EntitySet Name="EpisodeLocations" EntityType="DBTestModel.EpisodeLocations" />
           <EntitySet Name="Episodes" EntityType="DBTestModel.Episodes" />
           <EntitySet Name="ItemComponents" EntityType="DBTestModel.ItemComponents" />
           <EntitySet Name="Items" EntityType="DBTestModel.Items" />
@@ -266,9 +336,17 @@
           <EntitySet Name="OurThingsItems" EntityType="DBTestModel.OurThingsItems" />
           <EntitySet Name="Workshop" EntityType="DBTestModel.Workshop" />
           <EntitySet Name="WorkshopItems" EntityType="DBTestModel.WorkshopItems" />
+          <AssociationSet Name="FK_EpisodeLocations_Locations" Association="DBTestModel.FK_EpisodeLocations_Locations">
+            <End Role="Locations" EntitySet="Locations" />
+            <End Role="EpisodeLocations" EntitySet="EpisodeLocations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LocationItems_Locations" Association="DBTestModel.FK_LocationItems_Locations">
+            <End Role="EpisodeLocations" EntitySet="EpisodeLocations" />
+            <End Role="LocationItems" EntitySet="LocationItems" />
+          </AssociationSet>
           <AssociationSet Name="FK_Locations_Episodes" Association="DBTestModel.FK_Locations_Episodes">
             <End Role="Episodes" EntitySet="Episodes" />
-            <End Role="Locations" EntitySet="Locations" />
+            <End Role="EpisodeLocations" EntitySet="EpisodeLocations" />
           </AssociationSet>
           <AssociationSet Name="FK_OurThings_Episodes" Association="DBTestModel.FK_OurThings_Episodes">
             <End Role="Episodes" EntitySet="Episodes" />
@@ -294,10 +372,6 @@
             <End Role="Items" EntitySet="Items" />
             <End Role="WorkshopItems" EntitySet="WorkshopItems" />
           </AssociationSet>
-          <AssociationSet Name="FK_LocationItems_Locations" Association="DBTestModel.FK_LocationItems_Locations">
-            <End Role="Locations" EntitySet="Locations" />
-            <End Role="LocationItems" EntitySet="LocationItems" />
-          </AssociationSet>
           <AssociationSet Name="FK_OurThingsItems_OurThings" Association="DBTestModel.FK_OurThingsItems_OurThings">
             <End Role="OurThings" EntitySet="OurThings" />
             <End Role="OurThingsItems" EntitySet="OurThingsItems" />
@@ -306,7 +380,56 @@
             <End Role="Workshop" EntitySet="Workshop" />
             <End Role="WorkshopItems" EntitySet="WorkshopItems" />
           </AssociationSet>
-        </EntityContainer>
+          </EntityContainer>
+        <EntityType Name="Tasks">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="StartDate" Type="DateTime" Precision="3" />
+          <Property Name="EndDate" Type="DateTime" Precision="3" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DoneDate" Type="DateTime" Precision="3" />
+          <Property Name="StatusCode" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="TaskStatuses" Relationship="DBTestModel.FK_Tasks_TaskStatuses" FromRole="Tasks" ToRole="TaskStatuses" />
+        </EntityType>
+        <EntityType Name="TaskStatuses">
+          <Key>
+            <PropertyRef Name="Code" />
+          </Key>
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Tasks" Relationship="DBTestModel.FK_Tasks_TaskStatuses" FromRole="TaskStatuses" ToRole="Tasks" />
+        </EntityType>
+        <Association Name="FK_Tasks_TaskStatuses">
+          <End Type="DBTestModel.TaskStatuses" Role="TaskStatuses" Multiplicity="1" />
+          <End Type="DBTestModel.Tasks" Role="Tasks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaskStatuses">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="Tasks">
+              <PropertyRef Name="StatusCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="EpisodeLocations">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LocationID" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="EpisodeId" Type="Int32" Nullable="false" />
+          <Property Name="Percentage" Type="Int32" />
+          <Property Name="Items_Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Locations" Relationship="DBTestModel.FK_EpisodeLocations_Locations" FromRole="EpisodeLocations" ToRole="Locations" />
+          <NavigationProperty Name="LocationItems" Relationship="DBTestModel.FK_LocationItems_Locations" FromRole="EpisodeLocations" ToRole="LocationItems" />
+          <NavigationProperty Name="Episodes" Relationship="DBTestModel.FK_Locations_Episodes" FromRole="EpisodeLocations" ToRole="Episodes" />
+        </EntityType>
         <EntityType Name="Episodes">
           <Key>
             <PropertyRef Name="Id" />
@@ -314,7 +437,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Episode_Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="StarDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Locations" Relationship="DBTestModel.FK_Locations_Episodes" FromRole="Episodes" ToRole="Locations" />
+          <NavigationProperty Name="EpisodeLocations" Relationship="DBTestModel.FK_Locations_Episodes" FromRole="Episodes" ToRole="EpisodeLocations" />
           <NavigationProperty Name="OurThings" Relationship="DBTestModel.FK_OurThings_Episodes" FromRole="Episodes" ToRole="OurThings" />
           <NavigationProperty Name="Workshop" Relationship="DBTestModel.FK_Workshop_Episodes" FromRole="Episodes" ToRole="Workshop" />
         </EntityType>
@@ -347,8 +470,8 @@
           <Property Name="LocationId" Type="Int32" Nullable="false" />
           <Property Name="ItemId" Type="Int32" Nullable="false" />
           <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="EpisodeLocations" Relationship="DBTestModel.FK_LocationItems_Locations" FromRole="LocationItems" ToRole="EpisodeLocations" />
           <NavigationProperty Name="Items" Relationship="DBTestModel.FK_LocationItems_Items" FromRole="LocationItems" ToRole="Items" />
-          <NavigationProperty Name="Locations" Relationship="DBTestModel.FK_LocationItems_Locations" FromRole="LocationItems" ToRole="Locations" />
         </EntityType>
         <EntityType Name="Locations">
           <Key>
@@ -356,12 +479,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="EpisodeId" Type="Int32" Nullable="false" />
-          <Property Name="Percentage" Type="Int32" />
-          <Property Name="Items_Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Episodes" Relationship="DBTestModel.FK_Locations_Episodes" FromRole="Locations" ToRole="Episodes" />
-          <NavigationProperty Name="LocationItems" Relationship="DBTestModel.FK_LocationItems_Locations" FromRole="Locations" ToRole="LocationItems" />
+          <NavigationProperty Name="EpisodeLocations" Relationship="DBTestModel.FK_EpisodeLocations_Locations" FromRole="Locations" ToRole="EpisodeLocations" />
         </EntityType>
         <EntityType Name="OurThings">
           <Key>
@@ -403,14 +521,38 @@
           <NavigationProperty Name="Items" Relationship="DBTestModel.FK_WorkshopItems_Items" FromRole="WorkshopItems" ToRole="Items" />
           <NavigationProperty Name="Workshop" Relationship="DBTestModel.FK_WorkshopItems_Workshop" FromRole="WorkshopItems" ToRole="Workshop" />
         </EntityType>
+        <Association Name="FK_EpisodeLocations_Locations">
+          <End Type="DBTestModel.Locations" Role="Locations" Multiplicity="1" />
+          <End Type="DBTestModel.EpisodeLocations" Role="EpisodeLocations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Locations">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EpisodeLocations">
+              <PropertyRef Name="LocationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LocationItems_Locations">
+          <End Type="DBTestModel.EpisodeLocations" Role="EpisodeLocations" Multiplicity="1" />
+          <End Type="DBTestModel.LocationItems" Role="LocationItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EpisodeLocations">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LocationItems">
+              <PropertyRef Name="LocationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Locations_Episodes">
           <End Type="DBTestModel.Episodes" Role="Episodes" Multiplicity="1" />
-          <End Type="DBTestModel.Locations" Role="Locations" Multiplicity="*" />
+          <End Type="DBTestModel.EpisodeLocations" Role="EpisodeLocations" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Episodes">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Locations">
+            <Dependent Role="EpisodeLocations">
               <PropertyRef Name="EpisodeId" />
             </Dependent>
           </ReferentialConstraint>
@@ -487,18 +629,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_LocationItems_Locations">
-          <End Type="DBTestModel.Locations" Role="Locations" Multiplicity="1" />
-          <End Type="DBTestModel.LocationItems" Role="LocationItems" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Locations">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="LocationItems">
-              <PropertyRef Name="LocationId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_OurThingsItems_OurThings">
           <End Type="DBTestModel.OurThings" Role="OurThings" Multiplicity="1" />
           <End Type="DBTestModel.OurThingsItems" Role="OurThingsItems" Multiplicity="*" />
@@ -523,12 +653,47 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="DBTestModelStoreContainer" CdmEntityContainer="DBTestEntities" >
+          <EntitySetMapping Name="Tasks">
+            <EntityTypeMapping TypeName="DBTestModel.Tasks">
+              <MappingFragment StoreEntitySet="Tasks">
+                <ScalarProperty Name="StatusCode" ColumnName="StatusCode" />
+                <ScalarProperty Name="DoneDate" ColumnName="DoneDate" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TaskStatuses">
+            <EntityTypeMapping TypeName="DBTestModel.TaskStatuses">
+              <MappingFragment StoreEntitySet="TaskStatuses">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EpisodeLocations">
+            <EntityTypeMapping TypeName="DBTestModel.EpisodeLocations">
+              <MappingFragment StoreEntitySet="EpisodeLocations">
+                <ScalarProperty Name="Items_Description" ColumnName="Items Description" />
+                <ScalarProperty Name="Percentage" ColumnName="Percentage" />
+                <ScalarProperty Name="EpisodeId" ColumnName="EpisodeId" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="LocationID" ColumnName="LocationID" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Episodes">
             <EntityTypeMapping TypeName="DBTestModel.Episodes">
               <MappingFragment StoreEntitySet="Episodes">
@@ -569,10 +734,6 @@
           <EntitySetMapping Name="Locations">
             <EntityTypeMapping TypeName="DBTestModel.Locations">
               <MappingFragment StoreEntitySet="Locations">
-                <ScalarProperty Name="Items_Description" ColumnName="Items Description" />
-                <ScalarProperty Name="Percentage" ColumnName="Percentage" />
-                <ScalarProperty Name="EpisodeId" ColumnName="EpisodeId" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>

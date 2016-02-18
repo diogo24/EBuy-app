@@ -68,6 +68,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Constants\TaskStatuses.cs" />
     <Compile Include="DBFFileReader.cs" />
     <Compile Include="DBTest.Context.cs">
       <AutoGen>True</AutoGen>
@@ -85,6 +86,9 @@
       <DependentUpon>DBTest.edmx</DependentUpon>
     </Compile>
     <Compile Include="EbuyDataContext.cs" />
+    <Compile Include="EpisodeLocations.cs">
+      <DependentUpon>DBTest.tt</DependentUpon>
+    </Compile>
     <Compile Include="Episodes.cs">
       <DependentUpon>DBTest.tt</DependentUpon>
     </Compile>
@@ -108,6 +112,12 @@
       <DependentUpon>DBTest.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tasks.cs">
+      <DependentUpon>DBTest.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TaskStatuses.cs">
+      <DependentUpon>DBTest.tt</DependentUpon>
+    </Compile>
     <Compile Include="TestAPItoDB.cs" />
     <Compile Include="Workshop.cs">
       <DependentUpon>DBTest.tt</DependentUpon>

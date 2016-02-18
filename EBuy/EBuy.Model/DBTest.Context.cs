@@ -25,6 +25,9 @@ namespace EBuy.Model
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Tasks> Tasks { get; set; }
+        public virtual DbSet<TaskStatuses> TaskStatuses { get; set; }
+        public virtual DbSet<EpisodeLocations> EpisodeLocations { get; set; }
         public virtual DbSet<Episodes> Episodes { get; set; }
         public virtual DbSet<ItemComponents> ItemComponents { get; set; }
         public virtual DbSet<Items> Items { get; set; }

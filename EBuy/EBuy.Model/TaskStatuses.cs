@@ -12,18 +12,18 @@ namespace EBuy.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class Locations
+    public partial class TaskStatuses
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Locations()
+        public TaskStatuses()
         {
-            this.EpisodeLocations = new HashSet<EpisodeLocations>();
+            this.Tasks = new HashSet<Tasks>();
         }
     
-        public int Id { get; set; }
-        public string Name { get; set; }
+        public string Code { get; set; }
+        public string Description { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<EpisodeLocations> EpisodeLocations { get; set; }
+        public virtual ICollection<Tasks> Tasks { get; set; }
     }
 }

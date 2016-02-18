@@ -1,0 +1,13 @@
+Table Tasks
+ - Name
+ - Description // not required
+ - StartDate // task start date, not required
+ - EndDate // task end date, not required
+ - CreateDate // task creation date
+ - UpdatedDate // when the task changes - update this column
+ - DoneDate // when the status changed to done
+ - StatusCode // FK to status of task (Active, Done, Inactive, Removed...)
+ 
+ Table TaskStatuses
+  - Code // Task status code (Active, Done, Inactive, Removed...)
+  - Description // Task Status description
