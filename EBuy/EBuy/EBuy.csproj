@@ -208,7 +208,10 @@
     <Compile Include="Controllers\Learning\PartialViewController.cs" />
     <Compile Include="Controllers\Learning\TestLayoutController.cs" />
     <Compile Include="Controllers\Salonman\CumasController.cs" />
+    <Compile Include="Controllers\TasksProj\DayAndAdditionalTasks.cs" />
+    <Compile Include="Controllers\TasksProj\EnumExtensions.cs" />
     <Compile Include="Controllers\TasksProj\TasksController.cs" />
+    <Compile Include="Controllers\TasksProj\TaskType.cs" />
     <Compile Include="Controllers\ThisWarOfMine\EpisodesController.cs" />
     <Compile Include="Controllers\ThisWarOfMine\ItemComponentsController.cs" />
     <Compile Include="Controllers\ThisWarOfMine\ItemsController.cs" />
@@ -436,7 +439,9 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="stylesheets\Site.css" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -523,6 +528,7 @@
     <Content Include="Views\Tasks\Details.cshtml" />
     <Content Include="Views\Tasks\Edit.cshtml" />
     <Content Include="Views\Tasks\Index.cshtml" />
+    <Content Include="Views\Tasks\Index - Copy.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\GameDev\" />

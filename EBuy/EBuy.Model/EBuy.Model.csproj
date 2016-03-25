@@ -112,6 +112,9 @@
       <DependentUpon>DBTest.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TaskDayOfWeek.cs">
+      <DependentUpon>DBTest.tt</DependentUpon>
+    </Compile>
     <Compile Include="Tasks.cs">
       <DependentUpon>DBTest.tt</DependentUpon>
     </Compile>

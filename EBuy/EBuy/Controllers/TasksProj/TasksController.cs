@@ -19,7 +19,14 @@ namespace EBuy.Controllers.TasksProj
         public async Task<ActionResult> Index()
         {
             var tasks = db.Tasks.Include(t => t.TaskStatuses);
-            return View(await tasks.ToListAsync());
+
+            var dayOfWeek = (int)DateTime.Now.DayOfWeek;
+
+            var dayAndAdditionalTasks             = new DayAndAdditionalTasks();
+            dayAndAdditionalTasks.AdditionalTasks = tasks.Where(t => !t.DayOfWeek.HasValue).AsEnumerable();
+            dayAndAdditionalTasks.DayTasks        = tasks.Where(t => t.DayOfWeek == dayOfWeek).AsEnumerable();
+
+            return View(dayAndAdditionalTasks);
         }
 
         // GET: Tasks/Details/5
@@ -49,10 +56,13 @@ namespace EBuy.Controllers.TasksProj
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Name,Description,StartDate,EndDate,CreateDate,UpdatedDate,DoneDate,StatusCode")] Tasks tasks)
+        public async Task<ActionResult> Create([Bind(Include = "Name,Description,StartDate,EndDate,StatusCode,Type,DayOfWeek")] Tasks tasks)
         {
             if (ModelState.IsValid)
             {
+                tasks.CreateDate  = DateTime.UtcNow;
+                tasks.UpdatedDate = DateTime.UtcNow;
+
                 db.Tasks.Add(tasks);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");

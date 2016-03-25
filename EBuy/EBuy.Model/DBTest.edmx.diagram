@@ -29,6 +29,8 @@
         <AssociationConnector Association="DBTestModel.FK_WorkshopItems_Items" />
         <AssociationConnector Association="DBTestModel.FK_OurThingsItems_OurThings" />
         <AssociationConnector Association="DBTestModel.FK_WorkshopItems_Workshop" />
+        <EntityTypeShape EntityType="DBTestModel.TaskDayOfWeek" Width="1.5" PointX="9.875" PointY="1.375" />
+        <AssociationConnector Association="DBTestModel.FK_TaskDayOfWeek_Tasks" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

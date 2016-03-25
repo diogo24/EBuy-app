@@ -37,5 +37,6 @@ namespace EBuy.Model
         public virtual DbSet<OurThingsItems> OurThingsItems { get; set; }
         public virtual DbSet<Workshop> Workshop { get; set; }
         public virtual DbSet<WorkshopItems> WorkshopItems { get; set; }
+        public virtual DbSet<TaskDayOfWeek> TaskDayOfWeek { get; set; }
     }
 }

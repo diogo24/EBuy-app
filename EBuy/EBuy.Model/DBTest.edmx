@@ -72,6 +72,19 @@
           <Property Name="ItemId" Type="int" Nullable="false" />
           <Property Name="Quantity" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="TaskDayOfWeek">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TaskID" Type="int" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedDate" Type="datetime" Nullable="false" />
+          <Property Name="DoneDate" Type="datetime" />
+          <Property Name="Done" Type="bit" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" />
+        </EntityType>
         <EntityType Name="Tasks">
           <Key>
             <PropertyRef Name="Id" />
@@ -85,6 +98,8 @@
           <Property Name="UpdatedDate" Type="datetime" Nullable="false" />
           <Property Name="DoneDate" Type="datetime" />
           <Property Name="StatusCode" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="Type" Type="int" Nullable="false" />
+          <Property Name="DayOfWeek" Type="int" />
         </EntityType>
         <EntityType Name="TaskStatuses">
           <Key>
@@ -205,6 +220,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_TaskDayOfWeek_Tasks">
+          <End Role="Tasks" Type="Self.Tasks" Multiplicity="1" />
+          <End Role="TaskDayOfWeek" Type="Self.TaskDayOfWeek" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tasks">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TaskDayOfWeek">
+              <PropertyRef Name="TaskID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Tasks_TaskStatuses">
           <End Role="TaskStatuses" Type="Self.TaskStatuses" Multiplicity="1" />
           <End Role="Tasks" Type="Self.Tasks" Multiplicity="*" />
@@ -262,6 +289,7 @@
           <EntitySet Name="Locations" EntityType="Self.Locations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OurThings" EntityType="Self.OurThings" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OurThingsItems" EntityType="Self.OurThingsItems" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TaskDayOfWeek" EntityType="Self.TaskDayOfWeek" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tasks" EntityType="Self.Tasks" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TaskStatuses" EntityType="Self.TaskStatuses" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Workshop" EntityType="Self.Workshop" Schema="dbo" store:Type="Tables" />
@@ -297,6 +325,10 @@
           <AssociationSet Name="FK_OurThingsItems_OurThings" Association="Self.FK_OurThingsItems_OurThings">
             <End Role="OurThings" EntitySet="OurThings" />
             <End Role="OurThingsItems" EntitySet="OurThingsItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TaskDayOfWeek_Tasks" Association="Self.FK_TaskDayOfWeek_Tasks">
+            <End Role="Tasks" EntitySet="Tasks" />
+            <End Role="TaskDayOfWeek" EntitySet="TaskDayOfWeek" />
           </AssociationSet>
           <AssociationSet Name="FK_Tasks_TaskStatuses" Association="Self.FK_Tasks_TaskStatuses">
             <End Role="TaskStatuses" EntitySet="TaskStatuses" />
@@ -380,6 +412,11 @@
             <End Role="Workshop" EntitySet="Workshop" />
             <End Role="WorkshopItems" EntitySet="WorkshopItems" />
           </AssociationSet>
+          <EntitySet Name="TaskDayOfWeek" EntityType="DBTestModel.TaskDayOfWeek" />
+          <AssociationSet Name="FK_TaskDayOfWeek_Tasks" Association="DBTestModel.FK_TaskDayOfWeek_Tasks">
+            <End Role="Tasks" EntitySet="Tasks" />
+            <End Role="TaskDayOfWeek" EntitySet="TaskDayOfWeek" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="Tasks">
           <Key>
@@ -395,6 +432,9 @@
           <Property Name="DoneDate" Type="DateTime" Precision="3" />
           <Property Name="StatusCode" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
           <NavigationProperty Name="TaskStatuses" Relationship="DBTestModel.FK_Tasks_TaskStatuses" FromRole="Tasks" ToRole="TaskStatuses" />
+          <Property Name="Type" Type="Int32" Nullable="false" />
+          <Property Name="DayOfWeek" Type="Int32" />
+          <NavigationProperty Name="TaskDayOfWeek" Relationship="DBTestModel.FK_TaskDayOfWeek_Tasks" FromRole="Tasks" ToRole="TaskDayOfWeek" />
         </EntityType>
         <EntityType Name="TaskStatuses">
           <Key>
@@ -653,6 +693,32 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="TaskDayOfWeek">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TaskID" Type="Int32" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DoneDate" Type="DateTime" Precision="3" />
+          <Property Name="Done" Type="Boolean" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Tasks" Relationship="DBTestModel.FK_TaskDayOfWeek_Tasks" FromRole="TaskDayOfWeek" ToRole="Tasks" />
+        </EntityType>
+        <Association Name="FK_TaskDayOfWeek_Tasks">
+          <End Type="DBTestModel.Tasks" Role="Tasks" Multiplicity="1" />
+          <End Type="DBTestModel.TaskDayOfWeek" Role="TaskDayOfWeek" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tasks">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TaskDayOfWeek">
+              <PropertyRef Name="TaskID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -662,6 +728,8 @@
           <EntitySetMapping Name="Tasks">
             <EntityTypeMapping TypeName="DBTestModel.Tasks">
               <MappingFragment StoreEntitySet="Tasks">
+                <ScalarProperty Name="DayOfWeek" ColumnName="DayOfWeek" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
                 <ScalarProperty Name="StatusCode" ColumnName="StatusCode" />
                 <ScalarProperty Name="DoneDate" ColumnName="DoneDate" />
                 <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
@@ -771,6 +839,20 @@
               <MappingFragment StoreEntitySet="WorkshopItems">
                 <ScalarProperty Name="ItemId" ColumnName="ItemId" />
                 <ScalarProperty Name="WorkshopId" ColumnName="WorkshopId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TaskDayOfWeek">
+            <EntityTypeMapping TypeName="DBTestModel.TaskDayOfWeek">
+              <MappingFragment StoreEntitySet="TaskDayOfWeek">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Done" ColumnName="Done" />
+                <ScalarProperty Name="DoneDate" ColumnName="DoneDate" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="TaskID" ColumnName="TaskID" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

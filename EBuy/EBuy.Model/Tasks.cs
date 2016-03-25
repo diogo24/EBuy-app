@@ -14,6 +14,12 @@ namespace EBuy.Model
     
     public partial class Tasks
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Tasks()
+        {
+            this.TaskDayOfWeek = new HashSet<TaskDayOfWeek>();
+        }
+    
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
@@ -23,7 +29,11 @@ namespace EBuy.Model
         public System.DateTime UpdatedDate { get; set; }
         public Nullable<System.DateTime> DoneDate { get; set; }
         public string StatusCode { get; set; }
+        public int Type { get; set; }
+        public Nullable<int> DayOfWeek { get; set; }
     
         public virtual TaskStatuses TaskStatuses { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TaskDayOfWeek> TaskDayOfWeek { get; set; }
     }
 }
