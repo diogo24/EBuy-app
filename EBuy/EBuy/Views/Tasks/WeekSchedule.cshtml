@@ -1,0 +1,47 @@
+﻿
+@model EBuy.Controllers.TasksProj.WeekTasks
+
+@{
+    ViewBag.Title = "WeekSchedule";
+    Layout        = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>WeekSchedule</h2>
+
+<div class="row">
+    @foreach (var item in Model.Tasks)
+    {
+        <div class="col-lg-6">
+            <h3>@item.Key</h3>
+
+            <table class="table">
+                <tr>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Description
+                    </th>
+                    <th></th>
+                </tr>
+
+                @foreach (var task in item.Value)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => task.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => task.Description)
+                        </td>
+
+                        <td>
+                            @Html.ActionLink("Details", "Details", new { id = task.Id })
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    }
+</div>
+@Html.ActionLink("Back to List", "Index")

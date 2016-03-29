@@ -131,6 +131,18 @@ namespace EBuy.Controllers.TasksProj
             return RedirectToAction("Index");
         }
 
+        public async Task<ActionResult> WeekSchedule()
+        {
+            var weekTasks = new WeekTasks();
+
+            foreach (DayOfWeek item in Enum.GetValues(typeof(DayOfWeek)))
+            {                
+                weekTasks.Tasks.Add(item, db.Tasks.Where(t => t.DayOfWeek == (int)item));
+            }
+
+            return View(weekTasks);
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

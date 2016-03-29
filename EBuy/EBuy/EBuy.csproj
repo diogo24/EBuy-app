@@ -212,6 +212,7 @@
     <Compile Include="Controllers\TasksProj\EnumExtensions.cs" />
     <Compile Include="Controllers\TasksProj\TasksController.cs" />
     <Compile Include="Controllers\TasksProj\TaskType.cs" />
+    <Compile Include="Controllers\TasksProj\WeekTasks.cs" />
     <Compile Include="Controllers\ThisWarOfMine\EpisodesController.cs" />
     <Compile Include="Controllers\ThisWarOfMine\ItemComponentsController.cs" />
     <Compile Include="Controllers\ThisWarOfMine\ItemsController.cs" />
@@ -529,6 +530,7 @@
     <Content Include="Views\Tasks\Edit.cshtml" />
     <Content Include="Views\Tasks\Index.cshtml" />
     <Content Include="Views\Tasks\Index - Copy.cshtml" />
+    <Content Include="Views\Tasks\WeekSchedule.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\GameDev\" />
