@@ -26,7 +26,6 @@ namespace EBuy.Model
         }
     
         public virtual DbSet<Tasks> Tasks { get; set; }
-        public virtual DbSet<TaskStatuses> TaskStatuses { get; set; }
         public virtual DbSet<EpisodeLocations> EpisodeLocations { get; set; }
         public virtual DbSet<Episodes> Episodes { get; set; }
         public virtual DbSet<ItemComponents> ItemComponents { get; set; }
@@ -38,5 +37,8 @@ namespace EBuy.Model
         public virtual DbSet<Workshop> Workshop { get; set; }
         public virtual DbSet<WorkshopItems> WorkshopItems { get; set; }
         public virtual DbSet<TaskDayOfWeek> TaskDayOfWeek { get; set; }
+        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
+        public virtual DbSet<TaskDays> TaskDays { get; set; }
+        public virtual DbSet<TaskStatuses> TaskStatuses { get; set; }
     }
 }

@@ -18,6 +18,7 @@ namespace EBuy.Model
         public Tasks()
         {
             this.TaskDayOfWeek = new HashSet<TaskDayOfWeek>();
+            this.TaskDays = new HashSet<TaskDays>();
         }
     
         public int Id { get; set; }
@@ -30,10 +31,11 @@ namespace EBuy.Model
         public Nullable<System.DateTime> DoneDate { get; set; }
         public string StatusCode { get; set; }
         public int Type { get; set; }
-        public Nullable<int> DayOfWeek { get; set; }
     
-        public virtual TaskStatuses TaskStatuses { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TaskDayOfWeek> TaskDayOfWeek { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TaskDays> TaskDays { get; set; }
+        public virtual TaskStatuses TaskStatuses { get; set; }
     }
 }

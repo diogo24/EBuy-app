@@ -23,8 +23,8 @@ namespace EBuy.Controllers.TasksProj
             var dayOfWeek = (int)DateTime.Now.DayOfWeek;
 
             var dayAndAdditionalTasks             = new DayAndAdditionalTasks();
-            dayAndAdditionalTasks.AdditionalTasks = tasks.Where(t => !t.DayOfWeek.HasValue).AsEnumerable();
-            dayAndAdditionalTasks.DayTasks        = tasks.Where(t => t.DayOfWeek == dayOfWeek).AsEnumerable();
+            dayAndAdditionalTasks.AdditionalTasks = tasks.Where(t => t.Type == (int)TaskType.Additional).AsEnumerable();
+            dayAndAdditionalTasks.DayTasks        = tasks.Where(t => t.Type == (int)TaskType.WeeklySchedule && t.TaskDays.Any(td => td.DayOfWeek == dayOfWeek)).AsEnumerable();
 
             return View(dayAndAdditionalTasks);
         }
@@ -56,12 +56,17 @@ namespace EBuy.Controllers.TasksProj
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Name,Description,StartDate,EndDate,StatusCode,Type,DayOfWeek")] Tasks tasks)
+        public async Task<ActionResult> Create([Bind(Include = "Name,Description,StartDate,EndDate,StatusCode,Type")] Tasks tasks, [Bind(Include = "TaskDays")] List<int> taskDays)
         {
             if (ModelState.IsValid)
             {
                 tasks.CreateDate  = DateTime.UtcNow;
                 tasks.UpdatedDate = DateTime.UtcNow;
+
+                foreach (var item in taskDays)
+                {
+                    tasks.TaskDays.Add(new TaskDays { DayOfWeek = item });
+                }
 
                 db.Tasks.Add(tasks);
                 await db.SaveChangesAsync();
@@ -137,7 +142,7 @@ namespace EBuy.Controllers.TasksProj
 
             foreach (DayOfWeek item in Enum.GetValues(typeof(DayOfWeek)))
             {                
-                weekTasks.Tasks.Add(item, db.Tasks.Where(t => t.DayOfWeek == (int)item));
+               weekTasks.Tasks.Add(item, db.Tasks.Where(t => t.TaskDays.Any(td => td.DayOfWeek == (int)item)));
             }
 
             return View(weekTasks);
